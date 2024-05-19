@@ -16,4 +16,34 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Controllers\WeatherForecastController.cs" />
+      <Compile Remove="Controllers\**" />
+      <Compile Remove="WeatherForecast.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Controllers\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Controllers\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Controllers\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Crops\Application\" />
+      <Folder Include="Crops\Domain\Model\Aggregates\" />
+      <Folder Include="Crops\Infrastructure\" />
+      <Folder Include="Crops\Interfaces\" />
+      <Folder Include="Forum\Application\" />
+      <Folder Include="Forum\Domain\" />
+      <Folder Include="Forum\Infrastructure\" />
+      <Folder Include="Forum\Interfaces\" />
+      <Folder Include="Shared\" />
+    </ItemGroup>
+
 </Project>
