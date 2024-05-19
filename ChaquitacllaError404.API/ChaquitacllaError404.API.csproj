@@ -35,10 +35,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Crops\Application\" />
-      <Folder Include="Crops\Domain\Services\" />
-      <Folder Include="Crops\Infrastructure\" />
-      <Folder Include="Crops\Interfaces\Transform\" />
       <Folder Include="Forum\Application\" />
       <Folder Include="Forum\Domain\" />
       <Folder Include="Forum\Infrastructure\" />

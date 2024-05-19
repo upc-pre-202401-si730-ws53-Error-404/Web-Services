@@ -5,5 +5,5 @@ namespace ChaquitacllaError404.API.Crops.Domain.Repositories;
 
 public interface ISowingRepository : IBaseRepository<Sowing>
 {
-    
+    Task<IEnumerable<Sowing>> FindByStatusAsync(bool status);
 }
