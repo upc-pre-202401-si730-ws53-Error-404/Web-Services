@@ -3,7 +3,7 @@ using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Services;
 
-public interface IDiseaseCommandService
+public interface ICropCommandService
 {
-    Task<Disease> Handle(CreateDiseaseCommand command);
+    Task<Crop> Handle(CreateCropCommand command);
 }

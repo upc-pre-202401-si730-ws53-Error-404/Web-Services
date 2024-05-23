@@ -50,9 +50,15 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //Crops Bounded Context Dependency Injections
+
 builder.Services.AddScoped<ISowingRepository, SowingRepository>();
 builder.Services.AddScoped<ISowingCommandService, SowingCommandService>();
 builder.Services.AddScoped<ISowingQueryService, SowingQueryService>();
+builder.Services.AddScoped<ICropRepository, CropRepository>();
+builder.Services.AddScoped<ICropCommandService, CropCommandService>();
+builder.Services.AddScoped<ICropQueryService, CropQueryService>();
+
+
 
 var app = builder.Build();
 

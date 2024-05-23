@@ -3,7 +3,7 @@ using ChaquitacllaError404.API.Shared.Domain.Repositories;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Repositories;
 
-public interface IPestRepository : IBaseRepository<Pest>
+public interface ICropRepository: IBaseRepository<Crop>
 {
     
 }
