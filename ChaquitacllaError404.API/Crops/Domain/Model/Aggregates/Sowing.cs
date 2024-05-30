@@ -1,4 +1,5 @@
 ﻿using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
+using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 using ChaquitacllaError404.API.Crops.Domain.Model.ValueObjects;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
@@ -14,7 +15,9 @@ public class Sowing
     public EPhenologicalPhase PhenologicalPhase { get; private set; }
 
     public int CropId { get; private set; }
-    public Crop Crop { get; private set; } 
+    public Crop Crop { get; private set; }
+
+    public ICollection<ProductBySowing> ProductsBySowing { get; private set; } = [];
 
     public Sowing()
     {
