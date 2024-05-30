@@ -1,5 +1,6 @@
 
 using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,36 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Crop>().Property(f=>f.Id).ValueGeneratedOnAdd();
         builder.Entity<Crop>().Property(f => f.Name).IsRequired();
         builder.Entity<Crop>().Property(f => f.Description).IsRequired();
+        
+        //Product Entity 
+        builder.Entity<Product>().ToTable("Products");
+        builder.Entity<Product>().HasKey(f => f.Id);
+        builder.Entity<Product>().Property(f => f.Id).ValueGeneratedOnAdd();
+        builder.Entity<Product>().Property(f => f.Name).IsRequired();
+        builder.Entity<Product>().Property(f => f.Description).IsRequired();
+        builder.Entity<Product>().Property(f => f.Type).IsRequired();
+        
+        //ProductBySowing Entity
+        builder.Entity<ProductBySowing>().ToTable("ProductsBySowing");
+        builder.Entity<ProductBySowing>().HasKey(f => new {f.ProductId, f.SowingId});
+        builder.Entity<ProductBySowing>().Property(f => f.ProductId).IsRequired();
+        builder.Entity<ProductBySowing>().Property(f => f.SowingId).IsRequired();
+        builder.Entity<ProductBySowing>().Property(f => f.Quantity).IsRequired();
+        builder.Entity<ProductBySowing>().Property(f => f.UseDate).IsRequired();
+        
+        
+        //Relationships of many to many about Products and Sowings
+        builder.Entity<ProductBySowing>()
+            .HasOne(p => p.Product)
+            .WithMany(p => p.ProductsBySowing)
+            .HasForeignKey(p => p.ProductId);
+        
+        builder.Entity<ProductBySowing>()
+            .HasOne(p => p.Sowing)
+            .WithMany(s => s.ProductsBySowing)
+            .HasForeignKey(p => p.SowingId);
+        
+        
         
         builder.UseSnakeCaseNamingConvention();
     }
