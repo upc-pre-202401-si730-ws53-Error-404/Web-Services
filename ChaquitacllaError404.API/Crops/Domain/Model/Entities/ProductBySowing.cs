@@ -12,6 +12,11 @@ public class ProductBySowing
     public int Quantity { get; private set; }
     public DateTime UseDate { get; private set; }
 
+    
+    private ProductBySowing()
+    {
+        
+    }
     public ProductBySowing(CreateProductBySowingCommand command)
     {
         SowingId = command.SowingId;
