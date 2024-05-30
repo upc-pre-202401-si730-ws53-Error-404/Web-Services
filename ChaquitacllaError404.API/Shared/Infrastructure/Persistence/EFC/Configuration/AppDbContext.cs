@@ -22,9 +22,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Sowing>().ToTable("Sowings");
         builder.Entity<Sowing>().HasKey(f=>f.Id);
         builder.Entity<Sowing>().Property(f=>f.Id).ValueGeneratedOnAdd();
-        builder.Entity<Sowing>().Property(f=>f.StartDate).IsRequired();
-        builder.Entity<Sowing>().Property(f=>f.EndDate).IsRequired();
         builder.Entity<Sowing>().Property(f=>f.AreaLand).IsRequired();
+        builder.Entity<Sowing>().Property(f=>f.PhenologicalPhase).IsRequired();
 
         // Crop Aggregate
         builder.Entity<Crop>().ToTable("Crops");

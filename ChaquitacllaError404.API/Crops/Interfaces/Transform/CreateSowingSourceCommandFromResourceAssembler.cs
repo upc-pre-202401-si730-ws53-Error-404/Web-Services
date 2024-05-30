@@ -7,6 +7,6 @@ public static class CreateSowingSourceCommandFromResourceAssembler
 {
     public static CreateSowingCommand ToCommandFromResource(CreateSowingResource resource)
     {
-        return new CreateSowingCommand(resource.StartDate, resource.EndDate, resource.AreaLand);
+        return new CreateSowingCommand(resource.AreaLand);
     }
 }

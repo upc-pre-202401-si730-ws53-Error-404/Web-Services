@@ -7,7 +7,12 @@ public static class SowingResourceFromEntityAssembler
 {
     public static SowingResource ToResourceFromEntity(Sowing entity)
     {
-        return new SowingResource(entity.Id,entity.StartDate, entity.EndDate, entity.AreaLand, entity.Status);
+        return new SowingResource(entity.Id,
+            entity.StartDate,
+            entity.EndDate, 
+            entity.AreaLand,
+            entity.Status,
+            entity.PhenologicalPhase);
     }
 }
 
