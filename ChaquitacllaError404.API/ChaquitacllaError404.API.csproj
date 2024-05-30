@@ -35,6 +35,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Crops\Interfaces\REST\" />
       <Folder Include="Forum\Application\" />
       <Folder Include="Forum\Domain\" />
       <Folder Include="Forum\Infrastructure\" />
