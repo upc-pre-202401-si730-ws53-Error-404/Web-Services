@@ -1,6 +1,6 @@
 ﻿namespace ChaquitacllaError404.API.Crops.Domain.Model.ValueObjects;
 
-public enum PhenologicalPhase
+public enum EPhenologicalPhase
 {
     Germination,
     Seedling,
