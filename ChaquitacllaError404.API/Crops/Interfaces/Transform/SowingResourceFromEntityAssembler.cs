@@ -12,7 +12,8 @@ public static class SowingResourceFromEntityAssembler
             entity.EndDate, 
             entity.AreaLand,
             entity.Status,
-            entity.PhenologicalPhase);
+            entity.PhenologicalPhase,
+            entity.CropId);
     }
 }
 

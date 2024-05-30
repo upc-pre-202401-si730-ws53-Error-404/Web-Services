@@ -6,4 +6,5 @@ namespace ChaquitacllaError404.API.Crops.Domain.Services;
 public interface ISowingCommandService
 {
     Task<Sowing> Handle(CreateSowingCommand command);
+    Task<Sowing> Handle(int id, UpdateSowingCommand command);
 }

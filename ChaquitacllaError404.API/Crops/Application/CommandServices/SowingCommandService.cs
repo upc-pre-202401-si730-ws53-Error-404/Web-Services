@@ -24,4 +24,25 @@ public class SowingCommandService(ISowingRepository sowingRepository, IUnitOfWor
             throw new Exception("An error occurred while trying to add the new sowing", e);
         }
     }
+    public async Task<Sowing> Handle(int id, UpdateSowingCommand command)
+    {
+        var sowing = await sowingRepository.FindByIdAsync(id);
+        if (sowing == null)
+        {
+            throw new Exception("Sowing not found");
+        }
+
+        sowing.Update(command.AreaLand, command.CropId);
+
+        try
+        {
+            await sowingRepository.UpdateAsync(sowing);
+            await unitOfWork.CompleteAsync();
+            return sowing;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("An error occurred while trying to update the sowing", e);
+        }
+    }
 }

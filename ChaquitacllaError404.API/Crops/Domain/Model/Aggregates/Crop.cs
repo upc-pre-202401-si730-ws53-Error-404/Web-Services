@@ -7,12 +7,14 @@ public class Crop
     public int Id { get; private set; }
     public string Description { get; private set; }
     public string Name { get; private set; }
+    public ICollection<Sowing> Sowings { get; private set; } // Collection of Sowings
 
 
     protected Crop()
     {
         this.Name = string.Empty;
-        this.Description= string.Empty;
+        this.Description = string.Empty;
+        this.Sowings = new List<Sowing>();
     }
     public Crop(CreateCropCommand command)
     {
