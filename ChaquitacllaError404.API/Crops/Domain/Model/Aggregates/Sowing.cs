@@ -1,4 +1,5 @@
 ﻿using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
+using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 using ChaquitacllaError404.API.Crops.Domain.Model.ValueObjects;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
@@ -11,10 +12,12 @@ public class Sowing
     public int AreaLand { get; private set; }
     public bool Status { get; private set; }
 
-    public PhenologicalPhase PhenologicalPhase { get; private set; }
+    public EPhenologicalPhase PhenologicalPhase { get; private set; }
 
     public int CropId { get; private set; }
-    public Crop Crop { get; private set; } 
+    public Crop Crop { get; private set; }
+
+    public ICollection<ProductBySowing> ProductsBySowing { get; private set; } = [];
 
     public Sowing()
     {
@@ -22,7 +25,7 @@ public class Sowing
         this.EndDate = DateTime.MinValue;
         this.AreaLand = 0;
         this.Status = false;
-        this.PhenologicalPhase = PhenologicalPhase.Germination;
+        this.PhenologicalPhase = EPhenologicalPhase.Germination;
     }
 
 
@@ -31,7 +34,7 @@ public class Sowing
         this.StartDate = DateTime.Now;
         this.EndDate = this.StartDate.AddMonths(6);
         this.AreaLand = command.AreaLand;
-        this.PhenologicalPhase = PhenologicalPhase.Germination;
+        this.PhenologicalPhase = EPhenologicalPhase.Germination;
         this.CropId = command.CropId;
     }
 
