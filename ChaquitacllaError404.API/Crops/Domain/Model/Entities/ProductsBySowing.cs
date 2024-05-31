@@ -3,7 +3,7 @@ using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 
-public class ProductBySowing
+public class ProductsBySowing
 {
     public int SowingId { get; private set; }
     public Sowing Sowing { get; private set; }
@@ -13,16 +13,16 @@ public class ProductBySowing
     public DateTime UseDate { get; private set; }
 
     
-    private ProductBySowing()
+    private ProductsBySowing()
     {
         
     }
-    public ProductBySowing(CreateProductBySowingCommand command)
+    public ProductsBySowing(CreateProductBySowingCommand command)
     {
         SowingId = command.SowingId;
         ProductId = command.ProductId;
         Quantity = command.Quantity;
-        UseDate = command.UseDate; 
+        UseDate = DateTime.Now; 
     }
     
    
