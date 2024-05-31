@@ -14,4 +14,9 @@ public interface IProductQueryService
      * Return products by type
      */
     Task<IEnumerable<Product>> Handle(GetProductsByTypeQuery query);
+    
+    /**
+     * Return product by id
+     */
+    Task<Product?> Handle(GetProductByIdQuery query);
 }
