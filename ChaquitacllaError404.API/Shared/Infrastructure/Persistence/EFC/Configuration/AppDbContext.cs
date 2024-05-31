@@ -65,8 +65,23 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .WithMany(s => s.ProductsBySowing)
             .HasForeignKey(p => p.SowingId);
         
+        //Relationships of many to many about Crops and Diseases
+        builder.Entity<Crop>()
+            .HasMany(e => e.Diseases)
+            .WithMany(e => e.Crops)
+            .UsingEntity<CropsDiseases>();
+        
+        
+        //Relationships of many to many about Crops and Pests
+        builder.Entity<Crop>()
+            .HasMany(e => e.Pests)
+            .WithMany(e => e.Crops)
+            .UsingEntity<CropsPests>();
+        
+        
         
         
         builder.UseSnakeCaseNamingConvention();
     }
 }
+
