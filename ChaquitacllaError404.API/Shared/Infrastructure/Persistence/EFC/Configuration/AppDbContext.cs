@@ -45,22 +45,22 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Product>().Property(f => f.Name).IsRequired();
         builder.Entity<Product>().Property(f => f.Type).IsRequired().HasConversion<string>();
         
-        //ProductBySowing Entity
-        builder.Entity<ProductBySowing>().ToTable("ProductsBySowing");
-        builder.Entity<ProductBySowing>().HasKey(f => new {f.ProductId, f.SowingId});
-        builder.Entity<ProductBySowing>().Property(f => f.ProductId).IsRequired();
-        builder.Entity<ProductBySowing>().Property(f => f.SowingId).IsRequired();
-        builder.Entity<ProductBySowing>().Property(f => f.Quantity).IsRequired();
-        builder.Entity<ProductBySowing>().Property(f => f.UseDate).IsRequired();
+        //ProductsBySowing Entity
+        builder.Entity<ProductsBySowing>().ToTable("ProductsBySowing");
+        builder.Entity<ProductsBySowing>().HasKey(f => new {f.ProductId, f.SowingId});
+        builder.Entity<ProductsBySowing>().Property(f => f.ProductId).IsRequired();
+        builder.Entity<ProductsBySowing>().Property(f => f.SowingId).IsRequired();
+        builder.Entity<ProductsBySowing>().Property(f => f.Quantity).IsRequired();
+        builder.Entity<ProductsBySowing>().Property(f => f.UseDate).IsRequired();
         
         
         //Relationships of many to many about Products and Sowings
-        builder.Entity<ProductBySowing>()
+        builder.Entity<ProductsBySowing>()
             .HasOne(p => p.Product)
             .WithMany(p => p.ProductsBySowing)
             .HasForeignKey(p => p.ProductId);
         
-        builder.Entity<ProductBySowing>()
+        builder.Entity<ProductsBySowing>()
             .HasOne(p => p.Sowing)
             .WithMany(s => s.ProductsBySowing)
             .HasForeignKey(p => p.SowingId);
