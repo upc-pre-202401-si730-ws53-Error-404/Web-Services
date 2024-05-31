@@ -1,4 +1,5 @@
 ﻿using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
+using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
 
@@ -9,6 +10,8 @@ public class Crop
     public string Name { get; private set; }
     public ICollection<Sowing> Sowings { get; private set; } // Collection of Sowings
 
+    public List<Disease> Diseases { get; private set; } 
+    public List<Pest> Pests { get; private set; } 
 
     protected Crop()
     {

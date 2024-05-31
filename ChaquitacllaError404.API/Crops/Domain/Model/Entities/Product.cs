@@ -9,7 +9,7 @@ public class Product
     public string Name{get; private set; }
     public EProductType Type { get; private set; }
     
-    public ICollection<ProductBySowing> ProductsBySowing { get; private set; } = [];
+    public ICollection<ProductsBySowing> ProductsBySowing { get; private set; } = [];
 
     private Product()
     {
