@@ -7,16 +7,18 @@ public class Product
 {
     public int Id { get; }
     public string Name{get; private set; }
-    public string Description{ get; private set; }
     public EProductType Type { get; private set; }
     
     public ICollection<ProductBySowing> ProductsBySowing { get; private set; } = [];
 
-
+    private Product()
+    {
+        
+    }
+    
     public Product(CreateProductCommand command)
     {
         Name = command.Name;
-        Description = command.Description;
         Type = command.Type;
     }
     public Product(string name, EProductType type)
