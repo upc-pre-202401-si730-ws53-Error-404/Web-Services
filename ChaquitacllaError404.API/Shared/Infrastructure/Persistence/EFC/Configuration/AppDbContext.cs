@@ -43,7 +43,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Product>().HasKey(f => f.Id);
         builder.Entity<Product>().Property(f => f.Id).ValueGeneratedOnAdd();
         builder.Entity<Product>().Property(f => f.Name).IsRequired();
-        builder.Entity<Product>().Property(f => f.Description).IsRequired();
         builder.Entity<Product>().Property(f => f.Type).IsRequired().HasConversion<string>();
         
         //ProductBySowing Entity
