@@ -26,9 +26,6 @@ public class Product
         Name = name;
         Type = type;
     }
-    
-    
-    
-    
+
     
 }

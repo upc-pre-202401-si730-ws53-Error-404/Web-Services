@@ -53,6 +53,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<ProductBySowing>().Property(f => f.Quantity).IsRequired();
         builder.Entity<ProductBySowing>().Property(f => f.UseDate).IsRequired();
         
+        //Disease Entity
+        builder.Entity<Disease>().ToTable("Diseases");
+        builder.Entity<Disease>().HasKey(f => f.Id);
+        builder.Entity<Disease>().Property(f => f.Id).ValueGeneratedOnAdd();
+        builder.Entity<Disease>().Property(f => f.Name).IsRequired();
+        builder.Entity<Disease>().Property(f => f.Description).IsRequired();
+        
         
         //Relationships of many to many about Products and Sowings
         builder.Entity<ProductBySowing>()

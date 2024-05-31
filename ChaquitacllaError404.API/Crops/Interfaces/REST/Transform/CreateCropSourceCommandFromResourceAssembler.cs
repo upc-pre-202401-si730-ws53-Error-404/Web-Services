@@ -7,6 +7,6 @@ public static class CreateCropSourceCommandFromResourceAssembler
 {
     public static CreateCropCommand ToCommandFromResource(CreateCropResource resource)
     {
-        return new CreateCropCommand(resource.Name, resource.Description);
+        return new CreateCropCommand(resource.Name, resource.Description, resource.DiseaseIds, resource.PestIds);
     }
 }

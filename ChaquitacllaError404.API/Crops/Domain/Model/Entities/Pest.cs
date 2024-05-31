@@ -1,4 +1,5 @@
 using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 
@@ -18,5 +19,9 @@ public class Pest
         Name = name;
         Description = description;
     }
-
+    public Pest(CreatePestCommand command)
+    {
+        Name = command.Name;
+        Description = command.Description;
+    }
 }
