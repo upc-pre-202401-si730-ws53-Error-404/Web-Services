@@ -4,6 +4,11 @@ using  ChaquitacllaError404.API.Crops.Domain.Repositories;
 using  ChaquitacllaError404.API.Crops.Domain.Services;
 using  ChaquitacllaError404.API.Crops.Infrastructure.Persistence.EFC.Repositories;
 using  ChaquitacllaError404.API.Crops.Domain.Repositories;
+using ChaquitacllaError404.API.Forum.Application.CommandServices;
+using ChaquitacllaError404.API.Forum.Application.QueryService;
+using ChaquitacllaError404.API.Forum.Domain.Repositories;
+using ChaquitacllaError404.API.Forum.Domain.Services;
+using ChaquitacllaError404.API.Forum.Infrastructure.Persistence.EFC.Repositories;
 using ChaquitacllaError404.API.Shared.Domain.Repositories;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
@@ -53,6 +58,12 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ISowingRepository, SowingRepository>();
 builder.Services.AddScoped<ISowingCommandService, SowingCommandService>();
 builder.Services.AddScoped<ISowingQueryService, SowingQueryService>();
+
+
+//Forum Bounded Context Dependency Injections
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+builder.Services.AddScoped<IQuestionCommandService, QuestionCommandService>();
+builder.Services.AddScoped<IQuestionQueryService, QuestionQueryService>();
 
 var app = builder.Build();
 

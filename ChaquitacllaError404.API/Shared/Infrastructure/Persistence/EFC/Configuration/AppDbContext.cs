@@ -1,5 +1,6 @@
 
 using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Forum.Domain.Model.Aggregates;
 using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,15 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Sowing>().Property(f=>f.StartDate).IsRequired();
         builder.Entity<Sowing>().Property(f=>f.EndDate).IsRequired();
         builder.Entity<Sowing>().Property(f=>f.AreaLand).IsRequired();
-
+        
+        //Forum
+        builder.Entity<Question>().ToTable("Questions");
+        builder.Entity<Question>().HasKey(q => q.Id);
+        builder.Entity<Question>().Property(q => q.Id).ValueGeneratedOnAdd();
+        builder.Entity<Question>().Property(q => q.Category).IsRequired();
+        builder.Entity<Question>().Property(q => q.Ask).IsRequired();
+        
+        
         builder.UseSnakeCaseNamingConvention();
     }
 }
