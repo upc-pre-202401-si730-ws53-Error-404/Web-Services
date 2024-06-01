@@ -10,7 +10,6 @@ public class DiseaseResourceFromEntityAssembler
     {
         return new DiseaseResource(entity.Id,
             entity.Name,
-            entity.Description,
-            entity.Crops.Select(c => c.Id).ToList());
+            entity.Description);
     }
 }
