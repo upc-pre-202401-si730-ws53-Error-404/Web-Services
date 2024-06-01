@@ -1,4 +1,5 @@
 ﻿using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 
@@ -18,4 +19,9 @@ public class Disease
         Description = description;
     }
 
+    public Disease(CreateDiseaseCommand command)
+    {
+        Name = command.Name;
+        Description = command.Description;
+    }
 }

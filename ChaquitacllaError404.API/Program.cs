@@ -56,9 +56,15 @@ builder.Services.AddScoped<ISowingQueryService, SowingQueryService>();
 builder.Services.AddScoped<ICropRepository, CropRepository>();
 builder.Services.AddScoped<ICropCommandService, CropCommandService>();
 builder.Services.AddScoped<ICropQueryService, CropQueryService>();
+
+builder.Services.AddScoped<IDiseaseRepository, DiseaseRepository>();
+builder.Services.AddScoped<IDiseaseCommandService, DiseaseCommandService>();
+builder.Services.AddScoped<IDiseaseQueryService, DiseaseQueryService>();
+
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductCommandService, ProductCommandService>();
 builder.Services.AddScoped<IProductQueryService, ProductQueryService>();
+
 
 
 var app = builder.Build();
