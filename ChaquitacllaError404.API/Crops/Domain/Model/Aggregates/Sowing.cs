@@ -17,7 +17,7 @@ public class Sowing
     public int CropId { get; private set; }
     public Crop Crop { get; private set; }
 
-    public ICollection<ProductBySowing> ProductsBySowing { get; private set; } = [];
+    public ICollection<ProductsBySowing> ProductsBySowing { get; private set; } = [];
 
     public Sowing()
     {

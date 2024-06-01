@@ -5,11 +5,11 @@ namespace ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 
 public class Product
 {
-    public int Id { get; }
-    public string Name{get; private set; }
-    public EProductType Type { get; private set; }
+    public int Id { get; set; }
+    public string Name{get;  set; }
+    public EProductType Type { get;  set; }
     
-    public ICollection<ProductBySowing> ProductsBySowing { get; private set; } = [];
+    public ICollection<ProductsBySowing> ProductsBySowing { get; private set; } = [];
 
     private Product()
     {

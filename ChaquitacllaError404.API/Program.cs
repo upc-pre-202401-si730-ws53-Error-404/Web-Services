@@ -3,7 +3,6 @@ using  ChaquitacllaError404.API.Crops.Application.QueryServices;
 using  ChaquitacllaError404.API.Crops.Domain.Repositories;
 using  ChaquitacllaError404.API.Crops.Domain.Services;
 using  ChaquitacllaError404.API.Crops.Infrastructure.Persistence.EFC.Repositories;
-using  ChaquitacllaError404.API.Crops.Domain.Repositories;
 using ChaquitacllaError404.API.Shared.Domain.Repositories;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
@@ -57,9 +56,14 @@ builder.Services.AddScoped<ISowingQueryService, SowingQueryService>();
 builder.Services.AddScoped<ICropRepository, CropRepository>();
 builder.Services.AddScoped<ICropCommandService, CropCommandService>();
 builder.Services.AddScoped<ICropQueryService, CropQueryService>();
+
 builder.Services.AddScoped<IDiseaseRepository, DiseaseRepository>();
 builder.Services.AddScoped<IDiseaseCommandService, DiseaseCommandService>();
 builder.Services.AddScoped<IDiseaseQueryService, DiseaseQueryService>();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductCommandService, ProductCommandService>();
+builder.Services.AddScoped<IProductQueryService, ProductQueryService>();
 
 
 
