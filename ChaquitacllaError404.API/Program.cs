@@ -65,6 +65,10 @@ builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<IQuestionCommandService, QuestionCommandService>();
 builder.Services.AddScoped<IQuestionQueryService, QuestionQueryService>();
 
+builder.Services.AddScoped<IAnswerRepository, AnswerRepository>();
+builder.Services.AddScoped<IAnswerCommandService, AnswerCommandService>();
+builder.Services.AddScoped<IAnswerQueryService, AnswerQueryService>();
+
 var app = builder.Build();
 
 // Verify Database Objects are created
