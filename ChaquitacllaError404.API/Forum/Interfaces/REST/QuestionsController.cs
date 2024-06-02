@@ -14,9 +14,9 @@ namespace ChaquitacllaError404.API.Forum.Interfaces.REST;
 public class QuestionsController(IQuestionCommandService questionCommandService, IQuestionQueryService questionQueryService) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> CreateQuestion([FromBody] CreateQuestionResource createQuestionResource)
+    public async Task<ActionResult> CreateQuestion([FromHeader] int userId,[FromBody] CreateQuestionResource createQuestionResource)
     {
-        var createQuestionCommand = CreateQuestionCommandFromResourceAssembler.ToCommandFromResource(createQuestionResource);
+        var createQuestionCommand = CreateQuestionCommandFromResourceAssembler.ToCommandFromResource(userId,createQuestionResource);
         var question = await questionCommandService.Handle(createQuestionCommand);
         if (question is null) return BadRequest();
         var resource = QuestionResourceFromEntityAssembler.ToResourceFromEntity(question);
@@ -26,8 +26,8 @@ public class QuestionsController(IQuestionCommandService questionCommandService,
     [HttpPut("{questionId}")]
     public async Task<ActionResult> UpdateQuestion([FromRoute] int questionId, [FromBody] UpdateQuestionResource updateQuestionResource)
     {
-        var updateQuestionCommand = UpdateQuestionCommandFromResourceAssembler.ToCommandFromResource( updateQuestionResource);
-        var question = await questionCommandService.Handle(questionId, updateQuestionCommand);
+        var updateQuestionCommand = UpdateQuestionCommandFromResourceAssembler.ToCommandFromResource(questionId, updateQuestionResource);
+        var question = await questionCommandService.Handle( updateQuestionCommand);
         if (question == null) return NotFound();
         var resource = QuestionResourceFromEntityAssembler.ToResourceFromEntity(question);
         return Ok(resource);

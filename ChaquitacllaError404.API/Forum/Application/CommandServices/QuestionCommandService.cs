@@ -25,9 +25,9 @@ public class QuestionCommandService(IQuestionRepository questionRepository, IUni
     }
     
 
-    public async Task<Question> Handle(int questionId, UpdateQuestionCommand command)
+    public async Task<Question> Handle(UpdateQuestionCommand command)
     {
-        var question = await questionRepository.FindByIdAsync(questionId);
+        var question = await questionRepository.FindByIdAsync(command.QuestionId);
         if(question == null) throw new Exception("Question not found");
         question.UpdateInformation(command);
         try
