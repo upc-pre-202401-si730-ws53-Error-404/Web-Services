@@ -19,6 +19,6 @@ public class QuestionQueryService(IQuestionRepository questionRepository) : IQue
 
     public async Task<IEnumerable<Question>> Handle(GetAllQuestionsByUserId query)
     {
-        return await questionRepository.ListByUserIdAsync(query.UserId);
+        return await questionRepository.FindByUserIdAsync(query.AuthorId);
     }
 }

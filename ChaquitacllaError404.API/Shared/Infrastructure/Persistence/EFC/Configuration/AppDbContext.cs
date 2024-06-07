@@ -32,7 +32,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Question>().HasKey(q => q.Id);
         builder.Entity<Question>().Property(q => q.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Question>().Property(q => q.Category).IsRequired();
-        builder.Entity<Question>().Property(q => q.Ask).IsRequired();
+        builder.Entity<Question>().Property(q => q.QuestionText).IsRequired();
         
         builder.Entity<Answer>().ToTable("Answers");
         builder.Entity<Answer>().HasKey(a => a.Id);

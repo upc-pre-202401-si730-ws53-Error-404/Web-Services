@@ -14,9 +14,9 @@ namespace ChaquitacllaError404.API.Forum.Interfaces.REST;
 public class QuestionsController(IQuestionCommandService questionCommandService, IQuestionQueryService questionQueryService) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> CreateQuestion([FromHeader] int userId,[FromBody] CreateQuestionResource createQuestionResource)
+    public async Task<ActionResult> CreateQuestion([FromHeader] int authorId,[FromBody] CreateQuestionResource createQuestionResource)
     {
-        var createQuestionCommand = CreateQuestionCommandFromResourceAssembler.ToCommandFromResource(userId,createQuestionResource);
+        var createQuestionCommand = CreateQuestionCommandFromResourceAssembler.ToCommandFromResource(authorId,createQuestionResource);
         var question = await questionCommandService.Handle(createQuestionCommand);
         if (question is null) return BadRequest();
         var resource = QuestionResourceFromEntityAssembler.ToResourceFromEntity(question);
@@ -62,4 +62,13 @@ public class QuestionsController(IQuestionCommandService questionCommandService,
         return Ok(resource);
     }
     
+    //TODO: Implement this method when bounded context profiles is finished
+    /*[HttpGet("author/{authorId}")]
+    public async Task<ActionResult> GetQuestionsByUserId([FromRoute] int userId)
+    {
+        var getAllQuestionsByUserId = new GetAllQuestionsByUserId(userId);
+        var questions = await questionQueryService.Handle(getAllQuestionsByUserId);
+        var resources = questions.Select(QuestionResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }*/
 }

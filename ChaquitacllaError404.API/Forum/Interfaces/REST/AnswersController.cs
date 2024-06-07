@@ -14,9 +14,9 @@ namespace ChaquitacllaError404.API.Forum.Interfaces.REST;
 public class AnswersController(IAnswerCommandService answerCommandService, IAnswerQueryService answerQueryService) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> CreateAnswer([FromHeader] int userId, [FromHeader] int questionId, [FromBody] CreateAnswerResource createAnswerResource)
+    public async Task<ActionResult> CreateAnswer([FromHeader] int authorId, [FromHeader] int questionId, [FromBody] CreateAnswerResource createAnswerResource)
     {
-        var createAnswerCommand = CreateAnswerCommandFromResourceAssembler.ToCommandFromResource(userId, questionId, createAnswerResource);
+        var createAnswerCommand = CreateAnswerCommandFromResourceAssembler.ToCommandFromResource(authorId, questionId, createAnswerResource);
         var answer = await answerCommandService.Handle(createAnswerCommand);
         if (answer is null) return BadRequest();
         var resource = AnswerResourceFromEntityAssembler.ToResourceFromEntity(answer);
@@ -59,4 +59,14 @@ public class AnswersController(IAnswerCommandService answerCommandService, IAnsw
         var resource = AnswerResourceFromEntityAssembler.ToResourceFromEntity(answer);
         return Ok(resource);
     }
+    
+    //TODO: Implement this method when bounded context profiles is finished
+    /*[HttpGet("question/{questionId}")]
+    public async Task<ActionResult> GetAnswersByQuestionId([FromRoute] int questionId)
+    {
+        var getAllAnswersByQuestionIdQuery = new GetAllAnswersByQuestionId(questionId);
+        var answers = await answerQueryService.Handle(getAllAnswersByQuestionIdQuery);
+        var resources = answers.Select(AnswerResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }*/
 }

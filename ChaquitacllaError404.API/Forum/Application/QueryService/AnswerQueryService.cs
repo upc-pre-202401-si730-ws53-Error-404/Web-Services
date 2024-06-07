@@ -19,6 +19,6 @@ public class AnswerQueryService(IAnswerRepository answerRepository) : IAnswerQue
 
     public async Task<IEnumerable<Answer>> Handle(GetAllAnswersByQuestionId query)
     {
-        return await answerRepository.ListByQuestionIdAsync(query.QuestionId);
+        return await answerRepository.FindByQuestionIdAsync(query.QuestionId);
     }
 }

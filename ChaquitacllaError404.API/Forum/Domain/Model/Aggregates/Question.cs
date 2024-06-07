@@ -9,7 +9,7 @@ public class Question : IEntityWithCreatedUpdatedDate
 {
     public int Id { get; }
     public string Category { get; private set; }
-    public string Ask { get; private set;}
+    public string QuestionText { get; private set;}
     public UserId AuthorId { get; }
     
     public ICollection<Answer> Answers { get;  }    
@@ -21,22 +21,22 @@ public class Question : IEntityWithCreatedUpdatedDate
     {
         AuthorId = new UserId(0);
         Category = string.Empty;
-        Ask = string.Empty;
+        QuestionText = string.Empty;
     }
     
-    public Question(int authorId, string category, string ask)
+    public Question(int authorId, string category, string questionText)
     {
         AuthorId = new UserId(authorId);
         Category = category;
-        Ask = ask;
+        QuestionText = questionText;
     }
 
-    public Question(CreateQuestionCommand command) : this(command.AuthorId, command.Category, command.Ask){ }
+    public Question(CreateQuestionCommand command) : this(command.AuthorId, command.Category, command.QuestionText){ }
 
     public Question UpdateInformation(UpdateQuestionCommand command)
     {
         Category = command.Category;
-        Ask = command.Ask;
+        QuestionText = command.QuestionText;
         return this;
     }
     
