@@ -60,13 +60,13 @@ public class AnswersController(IAnswerCommandService answerCommandService, IAnsw
         return Ok(resource);
     }
     
-    //TODO: Implement this method when bounded context profiles is finished
-    /*[HttpGet("question/{questionId}")]
+    
+    [HttpGet("question/{questionId}")]
     public async Task<ActionResult> GetAnswersByQuestionId([FromRoute] int questionId)
     {
         var getAllAnswersByQuestionIdQuery = new GetAllAnswersByQuestionId(questionId);
         var answers = await answerQueryService.Handle(getAllAnswersByQuestionIdQuery);
         var resources = answers.Select(AnswerResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(resources);
-    }*/
+    }
 }
