@@ -10,6 +10,9 @@ public class QuestionCommandService(IQuestionRepository questionRepository, IUni
 {
     public async Task<Question?> Handle(CreateQuestionCommand command)
     {
+        if(questionRepository.ExistsByQuestionText(command.QuestionText)) 
+            throw new Exception("Question already exists");
+        
         var question = new Question(command);
         try
         {

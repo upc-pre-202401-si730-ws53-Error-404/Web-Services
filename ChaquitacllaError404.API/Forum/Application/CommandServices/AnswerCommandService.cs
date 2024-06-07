@@ -10,9 +10,12 @@ public class AnswerCommandService(IAnswerRepository answerRepository, IQuestionR
 {
     public async Task<Answer?> Handle(CreateAnswerCommand command)
     {
+        if(answerRepository.ExistsByAnswerText(command.AnswerText)) 
+            throw new Exception("Answer already exists");
+        
         var answer = new Answer(command);
         var question = await questionRepository.FindByIdAsync(command.QuestionId);
-        if(question == null) return null;
+        if(question == null) throw new Exception("Question not found");
         answer.Question = question;
         try
         {

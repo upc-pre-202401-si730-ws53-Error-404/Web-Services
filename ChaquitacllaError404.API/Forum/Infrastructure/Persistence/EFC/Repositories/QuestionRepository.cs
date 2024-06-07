@@ -12,4 +12,9 @@ public class QuestionRepository(AppDbContext context) : BaseRepository<Question>
     {
         return await Context.Set<Question>().Where(q => q.AuthorId.Id == authorId).ToListAsync();
     }
+
+    public bool ExistsByQuestionText(string questionText)
+    {
+        return Context.Set<Question>().Any(q=>q.QuestionText == questionText);
+    }
 }

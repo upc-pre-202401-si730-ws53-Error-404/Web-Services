@@ -6,4 +6,5 @@ namespace ChaquitacllaError404.API.Forum.Domain.Repositories;
 public interface IAnswerRepository : IBaseRepository<Answer>
 {
     Task<IEnumerable<Answer>> FindByQuestionIdAsync(int questionId);
+    bool ExistsByAnswerText(string answerText);
 }
