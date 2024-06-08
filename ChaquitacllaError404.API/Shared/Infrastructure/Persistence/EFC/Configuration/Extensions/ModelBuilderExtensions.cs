@@ -2,14 +2,26 @@
 
 namespace ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 
+/**
+ * <summary>
+ * Extension method to use snake case naming convention.
+ * </summary>
+ */
 public static class ModelBuilderExtensions
 {
-    public static void UseSnakeCaseWithPluralizedTableNamingConvention(this ModelBuilder builder)
+    /**
+     * <summary>
+     * Use snake case naming convention.
+     * This method will convert the table name, column names, key names, foreign key constraint names, and index names to snake case.
+     * </summary>
+     * <param name="builder">The model builder.</param>
+     */
+    public static void UseSnakeCaseNamingConvention(this ModelBuilder builder)
     {
         foreach (var entity in builder.Model.GetEntityTypes())
         {
             var tableName = entity.GetTableName();
-            if (!string.IsNullOrEmpty(tableName)) entity.SetTableName(tableName.ToPlural().ToSnakeCase());
+            if (!string.IsNullOrEmpty(tableName)) entity.SetTableName(tableName.ToSnakeCase());
 
             foreach (var property in entity.GetProperties())
                 property.SetColumnName(property.GetColumnName().ToSnakeCase());
