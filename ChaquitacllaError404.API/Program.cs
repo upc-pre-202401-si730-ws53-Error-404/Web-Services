@@ -64,6 +64,12 @@ builder.Services.AddScoped<ISowingRepository, SowingRepository>();
 builder.Services.AddScoped<ISowingCommandService, SowingCommandService>();
 builder.Services.AddScoped<ISowingQueryService, SowingQueryService>();
 
+//Controls Bounded Context Dependency Injections
+
+builder.Services.AddScoped<IControlRepository, ControlRepository>();
+builder.Services.AddScoped<IControlCommandService, ControlCommandService>();
+builder.Services.AddScoped<IControlQueryService, ControlQueryService>();
+
 //Crops Bounded Context Dependency Injections
 
 builder.Services.AddScoped<ICropRepository, CropRepository>();

@@ -71,6 +71,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasOne(s => s.Crop)
             .WithMany(c => c.Sowings) 
             .HasForeignKey(s => s.CropId);
+        
+        // Control Aggregate
+        
+        builder.Entity<Control>().ToTable("Controls");
+        builder.Entity<Control>().HasKey(f => f.Id);
+        builder.Entity<Control>().Property(f => f.Id).ValueGeneratedOnAdd();
+        builder.Entity<Control>().Property(f => f.Condition).IsRequired();
+        builder.Entity<Control>().Property(f => f.SoilMoisture).IsRequired();
+        builder.Entity<Control>().Property(f => f.StemCondition).IsRequired();
+        builder.Entity<Control>().Property(f => f.SowingId).IsRequired();
       
         // Crop Aggregate
         builder.Entity<Crop>().ToTable("Crops");
@@ -142,9 +152,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasMany(e => e.CropsDiseases)
             .WithOne(e => e.Disease)
             .HasForeignKey(e => e.DiseaseId);
-        
-        
-        
         
         //Relationships of many to many about Crops and Pests
         builder.Entity<Crop>()
