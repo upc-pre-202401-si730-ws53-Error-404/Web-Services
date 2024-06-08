@@ -1,14 +1,12 @@
 
-﻿using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
+using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using ChaquitacllaError404.API.Users.Domain.Model.Aggregates;
-using ChaquitacllaError404.API.Users.Domain.Model.ValueObjects;
 
 using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
 using ChaquitacllaError404.API.Forum.Domain.Model.Aggregates;
 using ChaquitacllaError404.API.Forum.Domain.Model.Entities;
 using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 
-using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -160,7 +158,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         
         builder.UseSnakeCaseNamingConvention();
     }
-
 }
         
       
