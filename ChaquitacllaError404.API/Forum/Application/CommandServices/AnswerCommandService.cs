@@ -1,5 +1,6 @@
 ﻿using ChaquitacllaError404.API.Forum.Domain.Model.Commands;
 using ChaquitacllaError404.API.Forum.Domain.Model.Entities;
+using ChaquitacllaError404.API.Forum.Domain.Model.ValueObjects;
 using ChaquitacllaError404.API.Forum.Domain.Repositories;
 using ChaquitacllaError404.API.Forum.Domain.Services;
 using ChaquitacllaError404.API.Shared.Domain.Repositories;
@@ -10,8 +11,10 @@ public class AnswerCommandService(IAnswerRepository answerRepository, IQuestionR
 {
     public async Task<Answer?> Handle(CreateAnswerCommand command)
     {
-        if(answerRepository.ExistsByAnswerText(command.AnswerText)) 
+        //TODO: Implement with profile bounded context is ready
+        /*if(answerRepository.ExistsByAnswerTextAndAuthorId(command.AnswerText, new UserId(command.AuthorId))) 
             throw new Exception("Answer already exists");
+            */
         
         var answer = new Answer(command);
         var question = await questionRepository.FindByIdAsync(command.QuestionId);

@@ -1,4 +1,5 @@
 ﻿using ChaquitacllaError404.API.Forum.Domain.Model.Entities;
+using ChaquitacllaError404.API.Forum.Domain.Model.ValueObjects;
 using ChaquitacllaError404.API.Forum.Domain.Repositories;
 using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Repositories;
@@ -13,8 +14,8 @@ public class AnswerRepository(AppDbContext context) : BaseRepository<Answer>(con
         return await Context.Set<Answer>().Where(a => a.QuestionId == questionId).ToListAsync();
     }
 
-    public bool ExistsByAnswerText(string answerText)
+    public bool ExistsByAnswerTextAndAuthorId(string answerText, UserId authorId)
     {
-        return Context.Set<Answer>().Any(a => a.AnswerText == answerText);
+        return Context.Set<Answer>().Any(a => a.AnswerText == answerText && a.AuthorId == authorId);
     }
 }
