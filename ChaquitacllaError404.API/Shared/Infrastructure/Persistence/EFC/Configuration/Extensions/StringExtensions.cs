@@ -1,4 +1,4 @@
-namespace ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
+﻿namespace ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 /**
  * <summary>
  * Extension method to convert a string to snake case.
