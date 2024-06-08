@@ -1,8 +1,8 @@
-﻿using FlexPalPlatform.API.Shared.Domain.Repositories;
-using FlexPalPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
+﻿using ChaquitacllaError404.API.Shared.Domain.Repositories;
+using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using Microsoft.EntityFrameworkCore;
 
-namespace FlexPalPlatform.API.Shared.Infrastructure.Persistence.EFC.Repositories;
+namespace ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Repositories;
 
 public abstract class BaseRepository<TEntity>(AppDbContext context) : IBaseRepository<TEntity>
     where TEntity : class

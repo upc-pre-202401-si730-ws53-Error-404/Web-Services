@@ -1,7 +1,6 @@
 ﻿using Humanizer;
 
-namespace FlexPalPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
-
+namespace ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 
 public static class StringExtensions
 {

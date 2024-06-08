@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-namespace FlexPalPlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration.Extensions;
+
+namespace ChaquitacllaError404.API.Shared.Infrastructure.Interfaces.ASP.Configuration.Extensions;
 
 public static class ModelStateExtensions
 {

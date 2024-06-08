@@ -3,7 +3,7 @@ using ChaquitacllaError404.API.Users.Interfaces.REST.Resources;
 
 namespace ChaquitacllaError404.API.Users.Interfaces.REST.Transform;
 
-public interface UserResourceFromEntityAssembler
+public interface IUserResourceFromEntityAssembler
 {
     public static UserResource ToResourceFromEntity(User entity)
     {
