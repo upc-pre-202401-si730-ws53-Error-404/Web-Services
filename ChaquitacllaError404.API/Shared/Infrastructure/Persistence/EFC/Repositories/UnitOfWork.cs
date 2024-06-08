@@ -1,7 +1,7 @@
-using  ChaquitacllaError404.API.Shared.Domain.Repositories;
-using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
+﻿using ChaquitacllaError404.API.Shared.Domain.Repositories;
+using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 
-namespace  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Repositories;
+namespace ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {

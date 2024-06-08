@@ -1,18 +1,9 @@
+﻿using Humanizer;
+
 namespace ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
-/**
- * <summary>
- * Extension method to convert a string to snake case.
- * </summary>
- */
+
 public static class StringExtensions
 {
-    /**
-     * <summary>
-     * Convert a string to snake case.
-     * </summary>
-     * <param name="text">The string to convert.</param>
-     * <returns>The converted string.</returns>
-     */
     public static string ToSnakeCase(this string text)
     {
         return new string(Convert(text.GetEnumerator()).ToArray());
@@ -35,4 +26,10 @@ public static class StringExtensions
                 }
         }
     }
+
+    public static string ToPlural(this string text)
+    {
+        return text.Pluralize(inputIsKnownToBeSingular:false);
+    }
+
 }
