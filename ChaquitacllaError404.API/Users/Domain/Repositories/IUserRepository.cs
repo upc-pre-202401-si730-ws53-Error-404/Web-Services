@@ -7,4 +7,6 @@ public interface IUserRepository: IBaseRepository<User>
 {
     Task<User?> FindByFirstNameAsync(string firstName);
     Task<User?> FindByLastNameAsync(string lastName);
+    Task<IEnumerable<User>> FindByCountryAsync(string country);
+    Task<IEnumerable<User>> FindByCityAsync(string city);
 }

@@ -10,4 +10,6 @@ public interface IUserQueryService
     Task<User?> Handle(GetUserByIdQuery query);
     Task<User?> Handle(GetUserByFirstNameQuery query);
     Task<User?> Handle(GetUserByLastNameQuery query);
+    Task<IEnumerable<User?>> Handle(GetUserByCountryQuery query);
+    Task<IEnumerable<User?>> Handle(GetUserByCityQuery query);
 }

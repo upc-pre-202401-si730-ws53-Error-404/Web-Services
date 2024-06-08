@@ -3,11 +3,15 @@ using  ChaquitacllaError404.API.Crops.Application.QueryServices;
 using  ChaquitacllaError404.API.Crops.Domain.Repositories;
 using  ChaquitacllaError404.API.Crops.Domain.Services;
 using  ChaquitacllaError404.API.Crops.Infrastructure.Persistence.EFC.Repositories;
-using  ChaquitacllaError404.API.Crops.Domain.Repositories;
 using ChaquitacllaError404.API.Shared.Domain.Repositories;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Repositories;
+using ChaquitacllaError404.API.Users.Application.Internal.CommandServices;
+using ChaquitacllaError404.API.Users.Application.Internal.QueryServices;
+using ChaquitacllaError404.API.Users.Domain.Repositories;
+using ChaquitacllaError404.API.Users.Domain.Services;
+using ChaquitacllaError404.API.Users.Infrastructure.Persistence.EFC.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,16 +53,23 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // Shared Bounded Context Dependency Injections
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-//Crops Bounded Context Dependency Injections
+//Sowings Bounded Context Dependency Injections
 
 builder.Services.AddScoped<ISowingRepository, SowingRepository>();
 builder.Services.AddScoped<ISowingCommandService, SowingCommandService>();
 builder.Services.AddScoped<ISowingQueryService, SowingQueryService>();
+
+//Crops Bounded Context Dependency Injections
+
 builder.Services.AddScoped<ICropRepository, CropRepository>();
 builder.Services.AddScoped<ICropCommandService, CropCommandService>();
 builder.Services.AddScoped<ICropQueryService, CropQueryService>();
 
+//Users Bounded Context Dependency Injections
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 
 var app = builder.Build();
 

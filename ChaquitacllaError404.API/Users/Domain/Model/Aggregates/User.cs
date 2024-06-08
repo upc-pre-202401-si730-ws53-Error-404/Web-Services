@@ -12,6 +12,8 @@ public partial class User
     public string Password { get; set; }
     public int Price { get; private set; }
     public string Description { get; private set; }
+    public string City { get; private set; }
+    public string Country { get; private set; }
     
     public User()
     {
@@ -21,6 +23,8 @@ public partial class User
         this.Password = string.Empty;
         this.Price = 0;
         this.Description = string.Empty;
+        this.City = string.Empty;
+        this.Country = string.Empty;
     }
 
     public User(CreateUserCommand command)
@@ -31,6 +35,8 @@ public partial class User
         this.Password = command.Password;
         this.Price = command.Price;
         this.Description = command.Description;
+        this.City = command.City;
+        this.Country = command.Country;
     }
     
     public bool VerifyPassword(string password)

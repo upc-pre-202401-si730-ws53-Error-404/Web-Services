@@ -29,6 +29,8 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(u => u.LastName).IsRequired();
         builder.Entity<User>().Property(u => u.Password).IsRequired();
         builder.Entity<User>().Property(u => u.Email).IsRequired();
+        builder.Entity<User>().Property(u => u.Country).IsRequired();
+        builder.Entity<User>().Property(u => u.City).IsRequired();
 
     // Apply SnakeCase Naming Convention
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();

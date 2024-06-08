@@ -15,6 +15,16 @@ public class UserRepository(AppDbContext context): BaseRepository<User>(context)
 
     public async Task<User?> FindByLastNameAsync(string lastName)
     {
-        return await context.Set<User>().FirstOrDefaultAsync(user => user.FirstName == lastName);
+        return await context.Set<User>().FirstOrDefaultAsync(user => user.LastName == lastName);
+    }
+
+    public async Task<IEnumerable<User>> FindByCountryAsync(string country)
+    {
+        return await context.Set<User>().Where(user => user.Country == country).ToListAsync();
+    }
+
+    public async Task<IEnumerable<User>> FindByCityAsync(string city)
+    {
+        return await context.Set<User>().Where(user => user.City == city).ToListAsync();
     }
 }
