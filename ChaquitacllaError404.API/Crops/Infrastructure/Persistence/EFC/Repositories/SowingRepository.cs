@@ -17,4 +17,10 @@ public class SowingRepository : BaseRepository<Sowing>, ISowingRepository
         return await Context.Set<Sowing>().Where(f => f.Status == status)
             .ToListAsync();
     }
+
+    public async Task UpdateAsync(Sowing sowing)
+    {
+    Context.Set<Sowing>().Update(sowing);
+    await Context.SaveChangesAsync();
+    }
 }

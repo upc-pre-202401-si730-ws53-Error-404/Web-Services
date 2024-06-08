@@ -3,7 +3,6 @@ using  ChaquitacllaError404.API.Crops.Application.QueryServices;
 using  ChaquitacllaError404.API.Crops.Domain.Repositories;
 using  ChaquitacllaError404.API.Crops.Domain.Services;
 using  ChaquitacllaError404.API.Crops.Infrastructure.Persistence.EFC.Repositories;
-using  ChaquitacllaError404.API.Crops.Domain.Repositories;
 using ChaquitacllaError404.API.Forum.Application.CommandServices;
 using ChaquitacllaError404.API.Forum.Application.QueryService;
 using ChaquitacllaError404.API.Forum.Domain.Repositories;
@@ -55,9 +54,27 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //Crops Bounded Context Dependency Injections
+
 builder.Services.AddScoped<ISowingRepository, SowingRepository>();
 builder.Services.AddScoped<ISowingCommandService, SowingCommandService>();
 builder.Services.AddScoped<ISowingQueryService, SowingQueryService>();
+builder.Services.AddScoped<ICropRepository, CropRepository>();
+builder.Services.AddScoped<ICropCommandService, CropCommandService>();
+builder.Services.AddScoped<ICropQueryService, CropQueryService>();
+
+builder.Services.AddScoped<IDiseaseRepository, DiseaseRepository>();
+builder.Services.AddScoped<IDiseaseCommandService, DiseaseCommandService>();
+builder.Services.AddScoped<IDiseaseQueryService, DiseaseQueryService>();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductCommandService, ProductCommandService>();
+builder.Services.AddScoped<IProductQueryService, ProductQueryService>();
+
+builder.Services.AddScoped<IPestRepository, PestRepository>();
+builder.Services.AddScoped<IPestCommandService, PestCommandService>();
+builder.Services.AddScoped<IPestQueryService, PestQueryService>();
+
+
 
 
 //Forum Bounded Context Dependency Injections

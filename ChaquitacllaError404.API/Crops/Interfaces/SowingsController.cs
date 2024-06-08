@@ -24,6 +24,18 @@ public class SowingsController(ISowingCommandService sowingCommandService,
         return CreatedAtAction(nameof(GetSowingById), new { id = result.Id },
                 SowingResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateSowing(int id, [FromBody] UpdateSowingResource resource)
+    {
+        var updateSowingCommand = UpdateSowingSourceCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var result = await sowingCommandService.Handle(id, updateSowingCommand);
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(SowingResourceFromEntityAssembler.ToResourceFromEntity(result));
+    }
     [HttpGet("{id}")]
     public async Task<ActionResult> GetSowingById(int id)
     {
