@@ -1,11 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Repositories;
 using ChaquitacllaError404.API.Users.Domain.Model.Aggregates;
 using ChaquitacllaError404.API.Users.Domain.Model.Commands;
 using ChaquitacllaError404.API.Users.Domain.Model.ValueObjects;
 using ChaquitacllaError404.API.Users.Domain.Repositories;
-using FlexPalPlatform.API.Shared.Infrastructure.Persistence.EFC.Repositories;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ChaquitacllaError404.API.Users.Application.Internal.CommandServices;
@@ -13,7 +13,7 @@ namespace ChaquitacllaError404.API.Users.Application.Internal.CommandServices;
 public class UserCommandService(IUserRepository userRepository, UnitOfWork unitOfWork, string _jwtSecret)
 //                              , IExternalProfileService externalProfileService (ACL para unir con profiles)
 {
-    public async Task<User?> Handle(CreateUserCommand command, string firstName, string lastName, string email, Subscriptions subscription)
+    public async Task<User?> Handle(CreateUserCommand command, string firstName, string lastName, string email, int price, string description)
     {
         var user = new User(command);
         user.Password = User.EncryptPassword(command.Password);

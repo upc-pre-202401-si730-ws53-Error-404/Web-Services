@@ -1,5 +1,5 @@
-﻿using ChaquitacllaError404.API.Users.Domain.Model.Aggregates;
-using FlexPalPlatform.API.Shared.Domain.Repositories;
+﻿using ChaquitacllaError404.API.Shared.Domain.Repositories;
+using ChaquitacllaError404.API.Users.Domain.Model.Aggregates;
 
 namespace ChaquitacllaError404.API.Users.Domain.Repositories;
 

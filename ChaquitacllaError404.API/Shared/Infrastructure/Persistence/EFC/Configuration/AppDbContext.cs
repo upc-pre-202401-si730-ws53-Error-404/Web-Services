@@ -1,5 +1,6 @@
 ﻿using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using ChaquitacllaError404.API.Users.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Users.Domain.Model.ValueObjects;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,9 +29,8 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(u => u.LastName).IsRequired();
         builder.Entity<User>().Property(u => u.Password).IsRequired();
         builder.Entity<User>().Property(u => u.Email).IsRequired();
-        builder.Entity<User>().Property(u => u.Subscription).IsRequired();
 
-        // Apply SnakeCase Naming Convention
+    // Apply SnakeCase Naming Convention
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();
     }
 

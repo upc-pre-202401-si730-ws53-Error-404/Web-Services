@@ -10,7 +10,8 @@ public partial class User
     public string LastName { get; private set; }
     public string Email { get; private set; }
     public string Password { get; set; }
-    public Subscriptions Subscription { get; private set; }
+    public int Price { get; private set; }
+    public string Description { get; private set; }
     
     public User()
     {
@@ -18,7 +19,8 @@ public partial class User
         this.LastName = string.Empty;
         this.Email = string.Empty;
         this.Password = string.Empty;
-        this.Subscription = new Subscriptions();
+        this.Price = 0;
+        this.Description = string.Empty;
     }
 
     public User(CreateUserCommand command)
@@ -27,7 +29,8 @@ public partial class User
         this.LastName = command.LastName;
         this.Email = command.Email;
         this.Password = command.Password;
-        this.Subscription = command.Subscription;
+        this.Price = command.Price;
+        this.Description = command.Description;
     }
     
     public bool VerifyPassword(string password)

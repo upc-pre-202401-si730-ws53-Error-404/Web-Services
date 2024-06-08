@@ -7,6 +7,6 @@ namespace ChaquitacllaError404.API.Users.Domain.Services;
 public interface IUserCommandService
 {
     Task<User?> Handle(CreateUserCommand command);
-    Task<User?> Handle(CreateUserCommand command, string firstName, string lastName, string email, Subscriptions subscription);
+    Task<User?> Handle(CreateUserCommand command, string firstName, string lastName, string email, int price, string description);
     Task<string?> Handle(LoginUserCommand command);
 }
