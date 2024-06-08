@@ -1,6 +1,9 @@
 
 using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Forum.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Forum.Domain.Model.Entities;
 using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
+
 using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +22,33 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     {
         base.OnModelCreating(builder);
         
+      
+        //Forum
+        builder.Entity<Question>().ToTable("Questions");
+        builder.Entity<Question>().HasKey(q => q.Id);
+        builder.Entity<Question>().Property(q => q.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Question>().Property(q => q.Category).IsRequired();
+        builder.Entity<Question>().Property(q => q.QuestionText).IsRequired();
+        
+        builder.Entity<Answer>().ToTable("Answers");
+        builder.Entity<Answer>().HasKey(a => a.Id);
+        builder.Entity<Answer>().Property(a => a.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Answer>().Property(a => a.AnswerText).IsRequired();
+        
+        builder.Entity<Question>()
+            .HasMany(q => q.Answers)
+            .WithOne(a => a.Question)
+            .HasForeignKey(a => a.QuestionId)
+            .HasPrincipalKey(a => a.Id);
+      
+      
         // Sowing Aggregate
         builder.Entity<Sowing>().ToTable("Sowings");
         builder.Entity<Sowing>().HasKey(f=>f.Id);
         builder.Entity<Sowing>().Property(f=>f.Id).ValueGeneratedOnAdd();
         builder.Entity<Sowing>().Property(f=>f.AreaLand).IsRequired();
+
+
         builder.Entity<Sowing>().Property(f=>f.PhenologicalPhase).IsRequired();
         builder.Entity<Sowing>().Property(f=>f.CropId).IsRequired();
         
@@ -31,6 +56,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasOne(s => s.Crop)
             .WithMany(c => c.Sowings) 
             .HasForeignKey(s => s.CropId);
+      
         // Crop Aggregate
         builder.Entity<Crop>().ToTable("Crops");
         builder.Entity<Crop>().HasKey(f => f.Id);
@@ -116,6 +142,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasForeignKey(e => e.PestId);
         
         
+
         
         
         builder.UseSnakeCaseNamingConvention();
