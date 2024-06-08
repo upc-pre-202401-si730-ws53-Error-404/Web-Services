@@ -54,12 +54,30 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<ProductsBySowing>().Property(f => f.UseDate).IsRequired();
         
         //Disease Entity
-        builder.Entity<Disease>().ToTable("Diseases");
+        builder.Entity<Disease>().ToTable("Disease");
         builder.Entity<Disease>().HasKey(f => f.Id);
         builder.Entity<Disease>().Property(f => f.Id).ValueGeneratedOnAdd();
         builder.Entity<Disease>().Property(f => f.Name).IsRequired();
         builder.Entity<Disease>().Property(f => f.Description).IsRequired();
         
+        //Pest Entity
+        builder.Entity<Pest>().ToTable("Pest");
+        builder.Entity<Pest>().HasKey(f => f.Id);
+        builder.Entity<Pest>().Property(f => f.Id).ValueGeneratedOnAdd();
+        builder.Entity<Pest>().Property(f => f.Name).IsRequired();
+        builder.Entity<Pest>().Property(f => f.Description).IsRequired();
+        
+        // CropsDiseases Entity
+        builder.Entity<CropsDiseases>().ToTable("CropsDiseases");
+        builder.Entity<CropsDiseases>().HasKey(cd => new { cd.CropId, cd.DiseaseId });
+        builder.Entity<CropsDiseases>().Property(cd => cd.CropId).IsRequired();
+        builder.Entity<CropsDiseases>().Property(cd => cd.DiseaseId).IsRequired();
+        
+        // CropsPests Entity
+        builder.Entity<CropsPests>().ToTable("CropsPests");
+        builder.Entity<CropsPests>().HasKey(cp => new { cp.CropId, cp.PestId });
+        builder.Entity<CropsPests>().Property(cp => cp.CropId).IsRequired();
+        builder.Entity<CropsPests>().Property(cp => cp.PestId).IsRequired();
         
         //Relationships of many to many about Products and Sowings
         builder.Entity<ProductsBySowing>()
@@ -74,16 +92,28 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         
         //Relationships of many to many about Crops and Diseases
         builder.Entity<Crop>()
-            .HasMany(e => e.Diseases)
-            .WithMany(e => e.Crops)
-            .UsingEntity<CropsDiseases>();
+            .HasMany(e => e.CropDiseases)
+            .WithOne(e => e.Crop)
+            .HasForeignKey(e => e.CropId);
+
+        builder.Entity<Disease>()
+            .HasMany(e => e.CropsDiseases)
+            .WithOne(e => e.Disease)
+            .HasForeignKey(e => e.DiseaseId);
+        
+        
         
         
         //Relationships of many to many about Crops and Pests
         builder.Entity<Crop>()
-            .HasMany(e => e.Pests)
-            .WithMany(e => e.Crops)
-            .UsingEntity<CropsPests>();
+            .HasMany(e => e.CropPests)
+            .WithOne(e => e.Crop)
+            .HasForeignKey(e => e.CropId);
+        
+        builder.Entity<Pest>()
+            .HasMany(e => e.CropsPests)
+            .WithOne(e => e.Pest)
+            .HasForeignKey(e => e.PestId);
         
         
         

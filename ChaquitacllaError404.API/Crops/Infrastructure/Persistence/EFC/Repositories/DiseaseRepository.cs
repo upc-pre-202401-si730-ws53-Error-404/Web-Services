@@ -16,8 +16,8 @@ public class DiseaseRepository  : BaseRepository<Disease>, IDiseaseRepository
     public async Task<IEnumerable<Disease>> FindByCropIdAsync(int cropId)
     {
         return await Context.Set<Disease>()
-            .Where(d => d.Crops.Any(c => c.Id == cropId))
-            .Include(d => d.Crops)
+            .Where(d => d.CropsDiseases.Any(c => c.CropId == cropId))
+            .Include(d => d.CropsDiseases)
             .ToListAsync();
     }
 }

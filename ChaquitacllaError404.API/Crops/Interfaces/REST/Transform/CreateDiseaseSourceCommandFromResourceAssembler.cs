@@ -7,6 +7,6 @@ public static class CreateDiseaseSourceCommandFromResourceAssembler
 {
     public static CreateDiseaseCommand ToCommandFromResource(CreateDiseaseResource resource)
     {
-        return new CreateDiseaseCommand(resource.Name, resource.Description);
+        return new CreateDiseaseCommand(resource.Name, resource.Description, resource.CropIds);
     }
 }

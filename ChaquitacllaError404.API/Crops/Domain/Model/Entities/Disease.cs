@@ -10,7 +10,7 @@ public class Disease
     public string Name { get; set; }
     public string Description { get; set; }
 
-    public List<Crop> Crops { get; set; }
+    public List<CropsDiseases> CropsDiseases { get; set; }
     
     public Disease(int id, string name, string description)
     {
@@ -23,5 +23,9 @@ public class Disease
     {
         Name = command.Name;
         Description = command.Description;
+    }
+
+    public Disease()
+    {
     }
 }

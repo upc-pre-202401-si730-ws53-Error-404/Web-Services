@@ -4,7 +4,7 @@ using ChaquitacllaError404.API.Crops.Interfaces.Resources;
 
 namespace ChaquitacllaError404.API.Crops.Interfaces.Transform;
 
-public class DiseaseResourceFromEntityAssembler
+public static class DiseaseResourceFromEntityAssembler
 {
     public static DiseaseResource ToResourceFromEntity(Disease entity)
     {

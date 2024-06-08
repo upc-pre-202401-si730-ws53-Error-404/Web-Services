@@ -10,7 +10,7 @@ public class Pest
     public string Name { get; set; }
     public string Description { get; set; }
 
-    public List<Crop> Crops { get; set; }
+    public List<CropsPests> CropsPests { get; set; }
 
     
     public Pest(int id, string name, string description)
@@ -23,5 +23,9 @@ public class Pest
     {
         Name = command.Name;
         Description = command.Description;
+    }
+    
+    public Pest()
+    {
     }
 }

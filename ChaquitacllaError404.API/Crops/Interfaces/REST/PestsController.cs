@@ -25,7 +25,7 @@ public class PestsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> CreatePest([FromBody] CreatePestResource resource)
     {
-        var createPestCommand = CreatePestCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var createPestCommand = CreatePestSourceCommandFromResourceAssembler.ToCommandFromResource(resource);
         var result = await pestCommandService.Handle(createPestCommand);
         return CreatedAtAction(nameof(GetPestById), new { id = result.Id },
             PestResourceFromEntityAssembler.ToResourceFromEntity(result));

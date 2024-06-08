@@ -4,10 +4,10 @@ using ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
 
 namespace ChaquitacllaError404.API.Crops.Interfaces.REST.Transform;
 
-public class CreatePestCommandFromResourceAssembler
+public static class CreatePestSourceCommandFromResourceAssembler
 {
     public static CreatePestCommand ToCommandFromResource(CreatePestResource resource)
     {
-        return new CreatePestCommand(resource.Name, resource.Description);
+        return new CreatePestCommand(resource.Name, resource.Description, resource.CropIds);
     }
 }
