@@ -27,7 +27,7 @@ public partial class User
         this.LastName = command.LastName;
         this.Email = command.Email;
         this.Password = command.Password;
-        this.Subscription = new Subscriptions(command.Price, command.Description);
+        this.Subscription = command.Subscription;
     }
     
     public bool VerifyPassword(string password)

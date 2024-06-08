@@ -1,3 +1,5 @@
-﻿namespace ChaquitacllaError404.API.Users.Domain.Model.Commands;
+﻿using ChaquitacllaError404.API.Users.Domain.Model.ValueObjects;
 
-public record CreateUserCommand(string FirstName, string LastName, string Email, string Password, int Price, string Description);
+namespace ChaquitacllaError404.API.Users.Domain.Model.Commands;
+
+public record CreateUserCommand(string FirstName, string LastName, string Email, string Password, Subscriptions Subscription);
