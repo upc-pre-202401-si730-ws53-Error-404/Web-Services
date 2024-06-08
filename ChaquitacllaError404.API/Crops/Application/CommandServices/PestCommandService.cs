@@ -20,7 +20,7 @@ public class PestCommandService(IPestRepository pestRepository, IUnitOfWork unit
         }
         catch (Exception e)
         {
-            throw new Exception("An error occurred while trying to add the new Disease", e);
+            throw new Exception("An error occurred while trying to add the new Pest", e);
         }
     }
 }

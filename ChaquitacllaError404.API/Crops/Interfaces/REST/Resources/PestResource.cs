@@ -1,3 +1,4 @@
-namespace ChaquitacllaError404.API.Crops.Interfaces.Resources;
+using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
 
-public record PestResource(int Id, string Name, string Description, List<int> CropIds);
+namespace ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
+public record PestResource(int Id, string Name, string Description, Crop[] CropIds);

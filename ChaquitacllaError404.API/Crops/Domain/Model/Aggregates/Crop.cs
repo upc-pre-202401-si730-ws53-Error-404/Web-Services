@@ -1,9 +1,9 @@
-﻿using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
+﻿using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
 using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
-using System.Collections.Generic;
 
-namespace ChaquitacllaError404.API.Crops.Domain.Model.Aggregates
-{
+namespace ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
+
     public class Crop
     {
         public int Id { get; private set; }
@@ -30,5 +30,15 @@ namespace ChaquitacllaError404.API.Crops.Domain.Model.Aggregates
             this.Diseases = new List<Disease>();
             this.Pests = new List<Pest>();
         }
+
+        public Crop(UpdateCropCommand command)
+        {
+            this.Name = command.Name;
+            this.Description = command.Description;
+        }
+        public void Update(string name, string description)
+        {
+            this.Name = name;
+            this.Description = description;
+        }
     }
-}

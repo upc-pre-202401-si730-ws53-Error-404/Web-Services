@@ -7,14 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
 
-
 [ApiController]
 [Route("/api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
-public class DiseasesController (IDiseaseCommandService diseaseCommandService,
-    IDiseaseQueryService diseaseQueryService)
-    : ControllerBase
+public class DiseasesController : ControllerBase
 {
+    private readonly IDiseaseCommandService diseaseCommandService;
+    private readonly IDiseaseQueryService diseaseQueryService;
+
+    public DiseasesController(IDiseaseCommandService diseaseCommandService,
+        IDiseaseQueryService diseaseQueryService)
+    {
+        this.diseaseCommandService = diseaseCommandService;
+        this.diseaseQueryService = diseaseQueryService;
+    }
+
     [HttpPost]
     public async Task<ActionResult> CreateDisease([FromBody] CreateDiseaseResource resource)
     {

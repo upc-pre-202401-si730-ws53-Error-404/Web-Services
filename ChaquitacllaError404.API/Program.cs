@@ -65,6 +65,10 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductCommandService, ProductCommandService>();
 builder.Services.AddScoped<IProductQueryService, ProductQueryService>();
 
+builder.Services.AddScoped<IPestRepository, PestRepository>();
+builder.Services.AddScoped<IPestCommandService, PestCommandService>();
+builder.Services.AddScoped<IPestQueryService, PestQueryService>();
+
 
 
 var app = builder.Build();
