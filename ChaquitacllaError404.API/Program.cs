@@ -3,6 +3,11 @@ using  ChaquitacllaError404.API.Crops.Application.QueryServices;
 using  ChaquitacllaError404.API.Crops.Domain.Repositories;
 using  ChaquitacllaError404.API.Crops.Domain.Services;
 using  ChaquitacllaError404.API.Crops.Infrastructure.Persistence.EFC.Repositories;
+using ChaquitacllaError404.API.Forum.Application.CommandServices;
+using ChaquitacllaError404.API.Forum.Application.QueryService;
+using ChaquitacllaError404.API.Forum.Domain.Repositories;
+using ChaquitacllaError404.API.Forum.Domain.Services;
+using ChaquitacllaError404.API.Forum.Infrastructure.Persistence.EFC.Repositories;
 using ChaquitacllaError404.API.Shared.Domain.Repositories;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
@@ -65,11 +70,35 @@ builder.Services.AddScoped<ICropRepository, CropRepository>();
 builder.Services.AddScoped<ICropCommandService, CropCommandService>();
 builder.Services.AddScoped<ICropQueryService, CropQueryService>();
 
+builder.Services.AddScoped<IDiseaseRepository, DiseaseRepository>();
+builder.Services.AddScoped<IDiseaseCommandService, DiseaseCommandService>();
+builder.Services.AddScoped<IDiseaseQueryService, DiseaseQueryService>();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductCommandService, ProductCommandService>();
+builder.Services.AddScoped<IProductQueryService, ProductQueryService>();
+
+builder.Services.AddScoped<IPestRepository, PestRepository>();
+builder.Services.AddScoped<IPestCommandService, PestCommandService>();
+builder.Services.AddScoped<IPestQueryService, PestQueryService>();
+
 //Users Bounded Context Dependency Injections
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<IUserQueryService, UserQueryService>();
+
+
+
+//Forum Bounded Context Dependency Injections
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+builder.Services.AddScoped<IQuestionCommandService, QuestionCommandService>();
+builder.Services.AddScoped<IQuestionQueryService, QuestionQueryService>();
+
+builder.Services.AddScoped<IAnswerRepository, AnswerRepository>();
+builder.Services.AddScoped<IAnswerCommandService, AnswerCommandService>();
+builder.Services.AddScoped<IAnswerQueryService, AnswerQueryService>();
+
 
 var app = builder.Build();
 

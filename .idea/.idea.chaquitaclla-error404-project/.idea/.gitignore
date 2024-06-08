@@ -3,9 +3,6 @@
 /workspace.xml
 # Rider ignored files
 /projectSettingsUpdater.xml
-/modules.xml
-/contentModel.xml
-/.idea.chaquitaclla-error404-project.iml
 # Editor-based HTTP Client requests
 /httpRequests/
 # Datasource local storage ignored files

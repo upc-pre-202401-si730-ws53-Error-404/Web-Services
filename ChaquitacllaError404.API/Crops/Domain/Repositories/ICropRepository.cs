@@ -4,5 +4,5 @@ namespace ChaquitacllaError404.API.Crops.Domain.Repositories;
 
 public interface ICropRepository: IBaseRepository<Crop>
 {
-    
+    Task UpdateAsync(Crop crop);
 }
