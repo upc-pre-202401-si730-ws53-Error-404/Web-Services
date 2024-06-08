@@ -1,3 +1,3 @@
 ﻿namespace ChaquitacllaError404.API.Forum.Interfaces.REST.Resources;
 
-public record CreateQuestionResource(string Category, string QuestionText);
+public record CreateQuestionResource(int AuthorId ,string Category, string QuestionText);

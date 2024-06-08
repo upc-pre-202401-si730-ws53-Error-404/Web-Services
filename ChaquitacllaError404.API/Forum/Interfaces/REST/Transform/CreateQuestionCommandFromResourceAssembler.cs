@@ -5,8 +5,8 @@ namespace ChaquitacllaError404.API.Forum.Interfaces.REST.Transform;
 
 public static class CreateQuestionCommandFromResourceAssembler
 {
-    public static CreateQuestionCommand ToCommandFromResource(int authorId,CreateQuestionResource resource)
+    public static CreateQuestionCommand ToCommandFromResource(CreateQuestionResource resource)
     {
-        return new CreateQuestionCommand(authorId, resource.Category, resource.QuestionText);
+        return new CreateQuestionCommand(resource.AuthorId, resource.Category, resource.QuestionText);
     }
 }
