@@ -18,6 +18,8 @@ public class Sowing
     public Crop Crop { get; private set; }
 
     public ICollection<ProductsBySowing> ProductsBySowing { get; private set; } = [];
+   
+    public ICollection<Controls> Controls { get; set; }
 
     public Sowing()
     {

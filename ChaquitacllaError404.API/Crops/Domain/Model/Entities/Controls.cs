@@ -13,16 +13,19 @@ public class Controls
     
     public Sowing Sowing { get; private set; }
     
-    public ESowingCondition Condition { get; private set; }
+    public ESowingCondition SowingCondition{ get; private set; }
     
     public ESowingSoilMoisture SoilMoisture { get; private set; }
     
     public ESowingStemCondition StemCondition { get; private set; }
     
+    public Controls()
+    {
+    }
     public Controls(CreateControlCommand command)
     {
         SowingId = command.SowingId;
-        Condition = command.Condition;
+        SowingCondition = command.SowingCondition;
         SoilMoisture = command.SoilMoisture;
         StemCondition = command.StemCondition;
     }

@@ -100,6 +100,11 @@ builder.Services.AddScoped<IAnswerCommandService, AnswerCommandService>();
 builder.Services.AddScoped<IAnswerQueryService, AnswerQueryService>();
 
 
+builder.Services.AddScoped<IControlRepository, ControlRepository>();
+builder.Services.AddScoped<IControlCommandService, ControlCommandService>();
+builder.Services.AddScoped<IControlQueryService, ControlQueryService>();
+
+
 var app = builder.Build();
 
 // Verify Database Objects are created
