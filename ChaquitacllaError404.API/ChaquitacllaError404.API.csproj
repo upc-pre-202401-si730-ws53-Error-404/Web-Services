@@ -44,7 +44,6 @@
       <Folder Include="Forum\Domain\" />
       <Folder Include="Forum\Infrastructure\" />
       <Folder Include="Forum\Interfaces\" />
-      <Folder Include="Users\Domain\Model\Commands\" />
     </ItemGroup>
 
 </Project>

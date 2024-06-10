@@ -8,6 +8,8 @@ namespace ChaquitacllaError404.API.Users.Infrastructure.Persistence.EFC.Reposito
 
 public class UserRepository(AppDbContext context): BaseRepository<User>(context), IUserRepository
 {
+    private IUserRepository _userRepositoryImplementation;
+
     public async Task<User?> FindByFirstNameAsync(string firstName)
     {
         return await context.Set<User>().FirstOrDefaultAsync(user => user.FirstName == firstName);
@@ -26,5 +28,10 @@ public class UserRepository(AppDbContext context): BaseRepository<User>(context)
     public async Task<IEnumerable<User>> FindByCityAsync(string city)
     {
         return await context.Set<User>().Where(user => user.City == city).ToListAsync();
+    }
+
+    public async Task<User?> GetWithDetailByIdAsync(int userId)
+    {
+        return await Context.Set<User>().Include(user=>user.SubscriptionId).FirstOrDefaultAsync(user => user.Id == userId);
     }
 }

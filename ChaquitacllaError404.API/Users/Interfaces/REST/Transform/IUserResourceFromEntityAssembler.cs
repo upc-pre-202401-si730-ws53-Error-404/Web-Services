@@ -7,6 +7,6 @@ public interface IUserResourceFromEntityAssembler
 {
     public static UserResource ToResourceFromEntity(User entity)
     {
-        return new UserResource(entity.Id, entity.FirstName, entity.LastName, entity.Email);
+        return new UserResource(entity.Id, entity.FirstName, entity.LastName, entity.SubscriptionId,  entity.Email);
     }
 }   

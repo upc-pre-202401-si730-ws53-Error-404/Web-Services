@@ -76,13 +76,12 @@ public class UsersController : ControllerBase
     [HttpPost("Register")]
     public async Task<IActionResult> RegisterUser([FromBody] RegisterUserResource resource)
     {
-        var createUserCommand = new CreateUserCommand(
-            resource.FirstName, resource.LastName, resource.Email,
-            resource.Password, resource.Price, resource.Description, resource.City, resource.Country);
+        var createUserCommand = new CreateUserCommand(resource.FirstName, resource.LastName, resource.Email,
+            resource.Password, resource.City, resource.Country);
         
         var user = await _userCommandService.Handle(
             createUserCommand, resource.FirstName, resource.FirstName,
-            resource.Email, resource.Price, resource.Description, resource.City, resource.Country);
+            resource.Email, resource.City, resource.Country);
         
         if (user == null) return BadRequest("An error occurred while creating the user.");
         

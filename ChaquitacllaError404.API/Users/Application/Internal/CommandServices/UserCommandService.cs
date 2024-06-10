@@ -14,6 +14,7 @@ public class UserCommandService : IUserCommandService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
+    private IUserCommandService _userCommandServiceImplementation;
 
     public UserCommandService(IUnitOfWork unitOfWork, IUserRepository userRepository)
     {
@@ -21,8 +22,7 @@ public class UserCommandService : IUserCommandService
         _userRepository = userRepository;
     }
 
-    public async Task<User?> Handle(CreateUserCommand command, string firstName, string lastName, string email,
-        int price, string description, string city, string country)
+    public async Task<User?> Handle(CreateUserCommand command, string firstName, string lastName, string email, string city, string country)
     {
         var user = new User(command);
         user.Password = User.EncryptPassword(command.Password);
