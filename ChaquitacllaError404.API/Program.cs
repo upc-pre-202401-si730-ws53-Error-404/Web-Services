@@ -8,16 +8,24 @@ using ChaquitacllaError404.API.Forum.Application.QueryService;
 using ChaquitacllaError404.API.Forum.Domain.Repositories;
 using ChaquitacllaError404.API.Forum.Domain.Services;
 using ChaquitacllaError404.API.Forum.Infrastructure.Persistence.EFC.Repositories;
+using ChaquitacllaError404.API.IAM.Application.Internal.CommandServices;
+using ChaquitacllaError404.API.IAM.Application.Internal.OutboundServices;
+using ChaquitacllaError404.API.IAM.Application.Internal.QueryServices;
+using ChaquitacllaError404.API.IAM.Domain.Repositories;
+using ChaquitacllaError404.API.IAM.Domain.Services;
+using ChaquitacllaError404.API.IAM.Infrastructure.Hashing.BCrypt.Services;
+using ChaquitacllaError404.API.IAM.Infrastructure.Persistence.EFC.Repositories;
+using ChaquitacllaError404.API.IAM.Infrastructure.Pipeline.Middleware.Extensions;
+using ChaquitacllaError404.API.IAM.Infrastructure.Tokens.JWT.Configuration;
+using ChaquitacllaError404.API.IAM.Infrastructure.Tokens.JWT.Services;
+using ChaquitacllaError404.API.IAM.Interfaces.ACL;
+using ChaquitacllaError404.API.IAM.Interfaces.ACL.Services;
 using ChaquitacllaError404.API.Shared.Domain.Repositories;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Repositories;
-using ChaquitacllaError404.API.Users.Application.Internal.CommandServices;
-using ChaquitacllaError404.API.Users.Application.Internal.QueryServices;
-using ChaquitacllaError404.API.Users.Domain.Repositories;
-using ChaquitacllaError404.API.Users.Domain.Services;
-using ChaquitacllaError404.API.Users.Infrastructure.Persistence.EFC.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,28 +36,75 @@ builder.Services.AddControllers(options =>
     options.Conventions.Add(new KebabCaseRouteNamingConvention());
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 // Add Database Connection String
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Configure Database Context and Logging Level
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    if (connectionString != null)
-        if (builder.Environment.IsDevelopment())
-            options.UseMySQL(connectionString)
-                .LogTo(Console.WriteLine, LogLevel.Information)
-                .EnableSensitiveDataLogging()
-                .EnableDetailedErrors();
-        else if (builder.Environment.IsProduction())
-            options.UseMySQL(connectionString)
-                .LogTo(Console.WriteLine, LogLevel.Information)
-                .EnableSensitiveDataLogging()
-                .EnableDetailedErrors();
-});
+builder.Services.AddDbContext<AppDbContext>(
+    options =>
+    {
+        if (connectionString != null)
+            if (builder.Environment.IsDevelopment())
+                options.UseMySQL(connectionString)
+                    .LogTo(Console.WriteLine, LogLevel.Information)
+                    .EnableSensitiveDataLogging()
+                    .EnableDetailedErrors();
+            else if (builder.Environment.IsProduction())
+                options.UseMySQL(connectionString)
+                    .LogTo(Console.WriteLine, LogLevel.Error)
+                    .EnableDetailedErrors();    
+    });
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(
+    c =>
+    {
+        c.SwaggerDoc("v1",
+            new OpenApiInfo
+            {
+                Title = "ChaquitacllaError404.API",
+                Version = "v1",
+                Description = "Chaquitaclla Error 404 Platform API",
+                TermsOfService = new Uri("https://github.com/upc-pre-202401-si730-ws53-Error-404/Web-Services"),
+                Contact = new OpenApiContact
+                {
+                    Name = "Error 404 development team",
+                    Email = "u202124343@upc."
+                },
+                License = new OpenApiLicense
+                {
+                    Name = "Apache 2.0",
+                    Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
+                }
+            });
+        c.EnableAnnotations();
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = "Please enter token",
+            Name = "Authorization",
+            Type = SecuritySchemeType.Http,
+            BearerFormat = "JWT",
+            Scheme = "bearer"
+        });
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Id = "Bearer",
+                        Type = ReferenceType.SecurityScheme
+                    }
+                },
+                Array.Empty<string>()
+            } 
+        });
+    });
+
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
@@ -82,13 +137,6 @@ builder.Services.AddScoped<IPestRepository, PestRepository>();
 builder.Services.AddScoped<IPestCommandService, PestCommandService>();
 builder.Services.AddScoped<IPestQueryService, PestQueryService>();
 
-//Users Bounded Context Dependency Injections
-
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserCommandService, UserCommandService>();
-builder.Services.AddScoped<IUserQueryService, UserQueryService>();
-
-
 
 //Forum Bounded Context Dependency Injections
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
@@ -99,6 +147,14 @@ builder.Services.AddScoped<IAnswerRepository, AnswerRepository>();
 builder.Services.AddScoped<IAnswerCommandService, AnswerCommandService>();
 builder.Services.AddScoped<IAnswerQueryService, AnswerQueryService>();
 
+// IAM Bounded Context Injection Configuration
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IHashingService, HashingService>();
+builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
 
 var app = builder.Build();
 
@@ -117,6 +173,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseRequestAuthorization();
 
 app.UseHttpsRedirection();
 
