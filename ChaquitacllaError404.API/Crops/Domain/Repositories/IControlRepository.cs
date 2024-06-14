@@ -1,17 +1,10 @@
 ﻿using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using ChaquitacllaError404.API.Shared.Domain.Repositories;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Repositories
 {
-    public interface IControlRepository
+    public interface IControlRepository : IBaseRepository<Control>
     {
-        Task<Control> GetByIdAsync(long id);
-        Task<List<Control>> GetAllAsync();
-        Task SaveAsync(Control control);
-        Task<bool> ExistsByIdAsync(long id);
-        Task DeleteByIdAsync(long id);
-        Task<List<Control>> GetBySowingIdAsync(int querySowingId);
         
     }
 }
