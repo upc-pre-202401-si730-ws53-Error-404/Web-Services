@@ -11,7 +11,24 @@ public class PestCommandService(IPestRepository pestRepository, IUnitOfWork unit
 {
     public async Task<Pest> Handle(CreatePestCommand command)
     {
-        var pest = new Pest(command);
+        var pest = new Pest
+        {
+            Name = command.Name,
+            Description = command.Description,
+            CropsPests = new List<CropsPests>()
+        };
+
+        foreach (var cropId in command.CropIds)
+        {
+            var cropsPests = new CropsPests
+            {
+                CropId = cropId,
+                Pest = pest
+            };
+
+            pest.CropsPests.Add(cropsPests);
+        }
+
         try
         {
             await pestRepository.AddAsync(pest);

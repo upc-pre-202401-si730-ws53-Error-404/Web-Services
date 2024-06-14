@@ -2,6 +2,8 @@
 using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Domain.Model.Queries;
 using ChaquitacllaError404.API.Crops.Interfaces.Resources;
+using ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
+using ChaquitacllaError404.API.Crops.Interfaces.REST.Transform;
 using ChaquitacllaError404.API.Crops.Interfaces.Transform;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,5 +34,18 @@ public class CropsController (ICropCommandService cropCommandService,
         var result = await cropQueryService.Handle(getCropByIdQuery);
         var resource = CropResourceFromEntityAssembler.ToResourceFromEntity(result);
         return Ok(resource);
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateCrop(int id, [FromBody] UpdateCropResource resource)
+    {
+        var updateCropCommand = UpdateCropSourceCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var result = await cropCommandService.Handle(id, updateCropCommand);
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(CropResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
 }

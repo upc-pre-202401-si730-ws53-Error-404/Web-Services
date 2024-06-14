@@ -11,9 +11,10 @@ public class Crop
     public string Name { get; private set; }
     public ICollection<Sowing> Sowings { get; private set; } // Collection of Sowings
 
-    public List<CropsDiseases> CropDiseases { get; private set; } 
+    public List<CropsDiseases> CropDiseases { get; private set; }
 
     public List<CropsPests> CropPests { get; private set; } 
+    public List<Pest> Pests { get; private set; } 
 
     protected Crop()
     {
@@ -22,12 +23,16 @@ public class Crop
         this.Sowings = new List<Sowing>();
         this.CropDiseases = new List<CropsDiseases>(); 
         this.CropPests = new List<CropsPests>();
+        this.Pests = new List<Pest>();
     }
 
     public Crop(CreateCropCommand command)
     {
         this.Name = command.Name;
         this.Description = command.Description;
+        this.CropDiseases = new List<CropsDiseases>();
+        this.CropPests = new List<CropsPests>();
+        this.Pests = new List<Pest>();
     }
 
     public Crop(UpdateCropCommand command)
