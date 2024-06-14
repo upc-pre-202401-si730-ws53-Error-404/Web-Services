@@ -17,9 +17,9 @@ public class ControlCommandService : IControlCommandService
         this.unitOfWork = unitOfWork;
     }
     
-    public async Task<Controls> Handle(CreateControlCommand command)
+    public async Task<Control> Handle(CreateControlCommand command)
     {
-        var control = new Controls(command);
+        var control = new Control(command);
         try
         {
             await controlRepository.AddAsync(control);

@@ -19,7 +19,7 @@ public class Sowing
 
     public ICollection<ProductsBySowing> ProductsBySowing { get; private set; } = [];
    
-    public ICollection<Controls> Controls { get; set; }
+    public ICollection<Control> Controls { get; set; }
 
     public Sowing()
     {

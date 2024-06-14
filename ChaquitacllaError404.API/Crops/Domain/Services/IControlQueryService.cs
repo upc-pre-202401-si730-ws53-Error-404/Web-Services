@@ -5,6 +5,6 @@ namespace ChaquitacllaError404.API.Crops.Domain.Services;
 
 public interface IControlQueryService
 {
-    Task<IEnumerable<Controls>> Handle(GetAllControlsQuery query);
-    Task<Controls?> Handle(GetControlByIdQuery query);
+    Task<IEnumerable<Control>> Handle(GetAllControlsQuery query);
+    Task<Control?> Handle(GetControlByIdQuery query);
 }

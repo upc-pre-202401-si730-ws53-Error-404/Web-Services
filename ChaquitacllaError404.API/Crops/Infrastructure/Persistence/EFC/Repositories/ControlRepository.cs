@@ -5,7 +5,7 @@ using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Repositorie
 
 namespace ChaquitacllaError404.API.Crops.Infrastructure.Persistence.EFC.Repositories;
 
-public class ControlRepository : BaseRepository<Controls>, IControlRepository
+public class ControlRepository : BaseRepository<Control>, IControlRepository
 {
     public ControlRepository(AppDbContext context) : base(context)
     {

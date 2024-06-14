@@ -65,7 +65,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Control>().ToTable("Controls");
         builder.Entity<Control>().HasKey(f => f.Id);
         builder.Entity<Control>().Property(f => f.Id).ValueGeneratedOnAdd();
-        builder.Entity<Control>().Property(f => f.Condition).IsRequired();
+        builder.Entity<Control>().Property(f => f.SowingCondition).IsRequired();
         builder.Entity<Control>().Property(f => f.SoilMoisture).IsRequired();
         builder.Entity<Control>().Property(f => f.StemCondition).IsRequired();
         builder.Entity<Control>().Property(f => f.SowingId).IsRequired();
@@ -119,13 +119,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<CropsPests>().Property(cp => cp.PestId).IsRequired();
         
         // Control Entity
-        builder.Entity<Controls>().ToTable("Controls");
-        builder.Entity<Controls>().HasKey(f => f.Id);
-        builder.Entity<Controls>().Property(f => f.Id).ValueGeneratedOnAdd();
-        builder.Entity<Controls>().Property(f => f.SowingId).IsRequired();
-        builder.Entity<Controls>().Property(f => f.SowingCondition).IsRequired();
-        builder.Entity<Controls>().Property(f => f.SoilMoisture).IsRequired();
-        builder.Entity<Controls>().Property(f => f.StemCondition).IsRequired();
+        builder.Entity<Control>().ToTable("Controls");
+        builder.Entity<Control>().HasKey(f => f.Id);
+        builder.Entity<Control>().Property(f => f.Id).ValueGeneratedOnAdd();
+        builder.Entity<Control>().Property(f => f.SowingId).IsRequired();
+        builder.Entity<Control>().Property(f => f.SowingCondition).IsRequired();
+        builder.Entity<Control>().Property(f => f.SoilMoisture).IsRequired();
+        builder.Entity<Control>().Property(f => f.StemCondition).IsRequired();
         
         // Add a navigation property for Controls
         builder.Entity<Sowing>()

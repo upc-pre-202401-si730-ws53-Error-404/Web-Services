@@ -7,11 +7,11 @@ namespace ChaquitacllaError404.API.Crops.Application.QueryServices;
 
 public class ControlQueryService (IControlRepository controlRepository) : IControlQueryService
 {
-    public async Task<IEnumerable<Controls>> Handle(GetAllControlsQuery query)
+    public async Task<IEnumerable<Control>> Handle(GetAllControlsQuery query)
     {
         return await controlRepository.ListAsync();
     }
-    public async Task<Controls?> Handle(GetControlByIdQuery query)
+    public async Task<Control?> Handle(GetControlByIdQuery query)
     {
         return await controlRepository.FindByIdAsync(query.Id);
     }

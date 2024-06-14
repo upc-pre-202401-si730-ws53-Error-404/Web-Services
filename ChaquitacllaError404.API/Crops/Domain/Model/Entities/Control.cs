@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 
-public class Controls
+public class Control
 {
     public int Id { get; }
     
@@ -19,10 +19,10 @@ public class Controls
     
     public ESowingStemCondition StemCondition { get; private set; }
     
-    public Controls()
+    public Control()
     {
     }
-    public Controls(CreateControlCommand command)
+    public Control(CreateControlCommand command)
     {
         SowingId = command.SowingId;
         SowingCondition = command.SowingCondition;
