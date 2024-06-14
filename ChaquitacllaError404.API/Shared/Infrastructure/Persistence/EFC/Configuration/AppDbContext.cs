@@ -118,6 +118,21 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<CropsPests>().Property(cp => cp.CropId).IsRequired();
         builder.Entity<CropsPests>().Property(cp => cp.PestId).IsRequired();
         
+        // Control Entity
+        builder.Entity<Controls>().ToTable("Controls");
+        builder.Entity<Controls>().HasKey(f => f.Id);
+        builder.Entity<Controls>().Property(f => f.Id).ValueGeneratedOnAdd();
+        builder.Entity<Controls>().Property(f => f.SowingId).IsRequired();
+        builder.Entity<Controls>().Property(f => f.SowingCondition).IsRequired();
+        builder.Entity<Controls>().Property(f => f.SoilMoisture).IsRequired();
+        builder.Entity<Controls>().Property(f => f.StemCondition).IsRequired();
+        
+        // Add a navigation property for Controls
+        builder.Entity<Sowing>()
+            .HasMany(s => s.Controls)
+            .WithOne(c => c.Sowing)
+            .HasForeignKey(c => c.SowingId);
+        
         //Relationships of many to many about Products and Sowings
         builder.Entity<ProductsBySowing>()
             .HasOne(p => p.Product)

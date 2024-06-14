@@ -162,6 +162,11 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
 
+builder.Services.AddScoped<IControlRepository, ControlRepository>();
+builder.Services.AddScoped<IControlCommandService, ControlCommandService>();
+builder.Services.AddScoped<IControlQueryService, ControlQueryService>();
+
+
 var app = builder.Build();
 
 // Verify Database Objects are created
