@@ -7,6 +7,6 @@ public static class CreateQuestionCommandFromResourceAssembler
 {
     public static CreateQuestionCommand ToCommandFromResource(CreateQuestionResource resource)
     {
-        return new CreateQuestionCommand(resource.AuthorId, resource.Category, resource.QuestionText);
+        return new CreateQuestionCommand(resource.AuthorId, resource.CategoryId, resource.QuestionText);
     }
 }

@@ -28,7 +28,7 @@ public class AnswersController(IAnswerCommandService answerCommandService, IAnsw
     {
         var updateAnswerCommand = UpdateAnswerCommandFromResourceAssembler.ToCommandFromResource(answerId,updateAnswerResource);
         var answer = await answerCommandService.Handle(updateAnswerCommand);
-        if (answer == null) return NotFound();
+        if (answer is null) return NotFound();
         var resource = AnswerResourceFromEntityAssembler.ToResourceFromEntity(answer);
         return Ok(resource);
     }
@@ -55,7 +55,7 @@ public class AnswersController(IAnswerCommandService answerCommandService, IAnsw
     public async Task<ActionResult> GetAnswerById([FromRoute] int answerId)
     {
         var answer = await answerQueryService.Handle(new GetAnswerByIdQuery(answerId));
-        if (answer == null) return NotFound();
+        if (answer is null) return NotFound();
         var resource = AnswerResourceFromEntityAssembler.ToResourceFromEntity(answer);
         return Ok(resource);
     }

@@ -35,23 +35,28 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Question>().ToTable("Questions");
         builder.Entity<Question>().HasKey(q => q.Id);
         builder.Entity<Question>().Property(q => q.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<Question>().Property(q => q.Category).IsRequired();
         builder.Entity<Question>().Property(q => q.QuestionText).IsRequired();
         
-        
-        
+        builder.Entity<Category>()
+            .HasMany(c => c.Questions)
+            .WithOne(q => q.Category)
+            .HasForeignKey(q => q.CategoryId);
+            
         builder.Entity<Answer>().ToTable("Answers");
         builder.Entity<Answer>().HasKey(a => a.Id);
         builder.Entity<Answer>().Property(a => a.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Answer>().Property(a => a.AnswerText).IsRequired();
-        
+
+
+
         builder.Entity<Question>()
             .HasMany(q => q.Answers)
             .WithOne(a => a.Question)
-            .HasForeignKey(a => a.QuestionId)
-            .HasPrincipalKey(a => a.Id);
+            .HasForeignKey(a => a.QuestionId);
       
-      
+        
+            
+        
         // Sowing Aggregate
         builder.Entity<Sowing>().ToTable("Sowings");
         builder.Entity<Sowing>().HasKey(f=>f.Id);

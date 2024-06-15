@@ -6,14 +6,16 @@ using ChaquitacllaError404.API.Shared.Domain.Repositories;
 
 namespace ChaquitacllaError404.API.Forum.Application.CommandServices;
 
-public class QuestionCommandService(IQuestionRepository questionRepository, IUnitOfWork unitOfWork) : IQuestionCommandService
+public class QuestionCommandService(IQuestionRepository questionRepository,ICategoryRepository categoryRepository, IUnitOfWork unitOfWork) : IQuestionCommandService
 {
     public async Task<Question?> Handle(CreateQuestionCommand command)
     {
         if(questionRepository.ExistsByQuestionText(command.QuestionText)) 
             throw new Exception("Question already exists");
-        
+        var category = await categoryRepository.FindByIdAsync(command.CategoryId);
+        if(category is null) throw new Exception("Category not found");
         var question = new Question(command);
+        question.Category = category;
         try
         {
             await questionRepository.AddAsync(question);
@@ -32,6 +34,9 @@ public class QuestionCommandService(IQuestionRepository questionRepository, IUni
     {
         var question = await questionRepository.FindByIdAsync(command.QuestionId);
         if(question is null) throw new Exception("Question not found");
+        var category = await categoryRepository.FindByIdAsync(command.CategoryId);
+        if(category is null) throw new Exception("Category not found");
+        
         question.UpdateInformation(command);
         try
         {

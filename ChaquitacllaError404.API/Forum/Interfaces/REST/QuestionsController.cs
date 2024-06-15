@@ -27,7 +27,7 @@ public class QuestionsController(IQuestionCommandService questionCommandService,
     public async Task<ActionResult> UpdateQuestion([FromRoute] int questionId, [FromBody] UpdateQuestionResource updateQuestionResource)
     {
         var updateQuestionCommand = UpdateQuestionCommandFromResourceAssembler.ToCommandFromResource(questionId, updateQuestionResource);
-        var question = await questionCommandService.Handle( updateQuestionCommand);
+        var question = await questionCommandService.Handle(updateQuestionCommand);
         if (question == null) return NotFound();
         var resource = QuestionResourceFromEntityAssembler.ToResourceFromEntity(question);
         return Ok(resource);
@@ -48,6 +48,7 @@ public class QuestionsController(IQuestionCommandService questionCommandService,
     {
         var getAllQuestionsQuery = new GetAllQuestionsQuery();
         var questions = await questionQueryService.Handle(getAllQuestionsQuery);
+        Console.WriteLine(questions);
         var resources = questions.Select(QuestionResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(resources);
     }
@@ -56,8 +57,10 @@ public class QuestionsController(IQuestionCommandService questionCommandService,
     [HttpGet("{questionId}")]
     public async Task<ActionResult> GetQuestionById([FromRoute] int questionId)
     {
-        var question = await questionQueryService.Handle(new GetQuestionByIdQuery(questionId));
-        if (question == null) return NotFound();
+        var getQuestionByIdQuery = new GetQuestionByIdQuery(questionId);
+        var question = await questionQueryService.Handle(getQuestionByIdQuery);
+        Console.WriteLine(question);
+        if (question is null) return NotFound();
         var resource = QuestionResourceFromEntityAssembler.ToResourceFromEntity(question);
         return Ok(resource);
     }

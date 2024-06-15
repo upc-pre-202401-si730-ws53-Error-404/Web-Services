@@ -11,7 +11,7 @@ namespace ChaquitacllaError404.API.Forum.Interfaces.REST;
 [ApiController]
 [Route("api/v1/forum/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
-public class CategoryController(ICategoryCommandService categoryCommandService, ICategoryQueryService categoryQueryService) : ControllerBase
+public class CategoriesController(ICategoryCommandService categoryCommandService, ICategoryQueryService categoryQueryService) : ControllerBase
 {
     [HttpPost]
     public async Task<ActionResult> CreateCategory([FromBody] CreateCategoryResource resource)
