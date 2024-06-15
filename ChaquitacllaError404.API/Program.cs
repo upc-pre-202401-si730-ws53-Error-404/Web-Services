@@ -145,6 +145,10 @@ builder.Services.AddScoped<IPestQueryService, PestQueryService>();
 
 
 //Forum Bounded Context Dependency Injections
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryCommandService, CategoryCommandService>();
+builder.Services.AddScoped<ICategoryQueryService, CategoryQueryService>();
+
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<IQuestionCommandService, QuestionCommandService>();
 builder.Services.AddScoped<IQuestionQueryService, QuestionQueryService>();
