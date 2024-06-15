@@ -31,7 +31,7 @@ public class QuestionCommandService(IQuestionRepository questionRepository, IUni
     public async Task<Question> Handle(UpdateQuestionCommand command)
     {
         var question = await questionRepository.FindByIdAsync(command.QuestionId);
-        if(question == null) throw new Exception("Question not found");
+        if(question is null) throw new Exception("Question not found");
         question.UpdateInformation(command);
         try
         {
@@ -49,7 +49,7 @@ public class QuestionCommandService(IQuestionRepository questionRepository, IUni
     public async Task Handle(DeleteQuestionCommand command)
     {
         var question = await questionRepository.FindByIdAsync(command.QuestionId);
-        if(question == null) throw new Exception("Question not found");
+        if(question is null) throw new Exception("Question not found");
         try
         {
             questionRepository.Remove(question);

@@ -18,7 +18,7 @@ public class AnswerCommandService(IAnswerRepository answerRepository, IQuestionR
         
         var answer = new Answer(command);
         var question = await questionRepository.FindByIdAsync(command.QuestionId);
-        if(question == null) throw new Exception("Question not found");
+        if(question is null) throw new Exception("Question not found");
         answer.Question = question;
         try
         {
@@ -36,7 +36,7 @@ public class AnswerCommandService(IAnswerRepository answerRepository, IQuestionR
     public async Task<Answer> Handle(UpdateAnswerCommand command)
     {
         var answer = await answerRepository.FindByIdAsync(command.AnswerId);
-        if(answer == null) throw new Exception("Answer not found");
+        if(answer is null) throw new Exception("Answer not found");
         answer.UpdateInformation(command);
         try
         {
@@ -54,7 +54,7 @@ public class AnswerCommandService(IAnswerRepository answerRepository, IQuestionR
     public async Task Handle(DeleteAnswerCommand command)
     {
         var answer = await answerRepository.FindByIdAsync(command.AnswerId);
-        if(answer == null) throw new Exception("Answer not found");
+        if(answer is null) throw new Exception("Answer not found");
         try
         {
             answerRepository.Remove(answer);
