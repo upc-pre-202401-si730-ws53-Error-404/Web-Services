@@ -2,4 +2,4 @@
 
 namespace ChaquitacllaError404.API.Profiles.Domain.Model.Commands;
 
-public record CreateSubscriptionCommand(string Description, decimal Price, SubscriptionRange Range);
+public record CreateSubscriptionCommand(string Description, decimal Price, int Range);

@@ -9,7 +9,6 @@ public partial class Profile
     {
         Name = new PersonName();
         Email = new EmailAddress();
-        
     }
 
     public Profile(string firstName, string lastName, string email, int cityId, int subscriptionId, int countryId, DateTime startDate, DateTime endDate)
@@ -46,5 +45,13 @@ public partial class Profile
     public string FullName => Name.FullName;
 
     public string EmailAddress => Email.Address;
-    
+
+    public void UpdateProfile(string fullName, string emailAddress, int countryId, int cityId, int subscriptionId)
+    {
+        Name = new PersonName(fullName);
+        Email = new EmailAddress(emailAddress);
+        CountryId = countryId;
+        CityId = cityId;
+        SubscriptionId = subscriptionId;
+    }
 }

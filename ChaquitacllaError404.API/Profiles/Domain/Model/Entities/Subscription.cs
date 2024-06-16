@@ -8,9 +8,9 @@ public class Subscription
     public int Id { get; init; }
     public string Description { get; set; }
     public decimal Price { get; set; }
-    public SubscriptionRange Range { get; set; }
+    public int Range { get; set; }
 
-    public Subscription(string description, decimal price, SubscriptionRange range)
+    public Subscription(string description, decimal price, int range)
     {
         Description = description;
         Price = price;
