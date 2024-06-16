@@ -20,6 +20,11 @@ using ChaquitacllaError404.API.IAM.Infrastructure.Tokens.JWT.Configuration;
 using ChaquitacllaError404.API.IAM.Infrastructure.Tokens.JWT.Services;
 using ChaquitacllaError404.API.IAM.Interfaces.ACL;
 using ChaquitacllaError404.API.IAM.Interfaces.ACL.Services;
+using ChaquitacllaError404.API.Profiles.Application.Internal.CommandServices;
+using ChaquitacllaError404.API.Profiles.Application.Internal.QueryServices;
+using ChaquitacllaError404.API.Profiles.Domain.Repositories;
+using ChaquitacllaError404.API.Profiles.Domain.Services;
+using ChaquitacllaError404.API.Profiles.Infrastructure.Persistence.EFC.Repositories;
 using ChaquitacllaError404.API.Shared.Domain.Repositories;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
@@ -166,6 +171,12 @@ builder.Services.AddScoped<IControlRepository, ControlRepository>();
 builder.Services.AddScoped<IControlCommandService, ControlCommandService>();
 builder.Services.AddScoped<IControlQueryService, ControlQueryService>();
 
+// Profiles Bounded Context Dependency Injections
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IProfileCommandService, ProfileCommandService>();
+builder.Services.AddScoped<IProfileQueryService, ProfileQueryService>();
+builder.Services.AddScoped<ISubscriptionCommandService, ISubscriptionCommandService>();
+builder.Services.AddScoped<ISubscriptionRepository, ISubscriptionRepository>();
 
 var app = builder.Build();
 

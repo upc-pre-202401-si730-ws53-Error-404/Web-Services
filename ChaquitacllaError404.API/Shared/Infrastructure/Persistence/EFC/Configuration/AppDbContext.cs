@@ -6,6 +6,8 @@ using ChaquitacllaError404.API.Forum.Domain.Model.Aggregates;
 using ChaquitacllaError404.API.Forum.Domain.Model.Entities;
 using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 using ChaquitacllaError404.API.IAM.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Profiles.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Profiles.Domain.Model.Entities;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -173,6 +175,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<User>().Property(u => u.Username).IsRequired();
         builder.Entity<User>().Property(u => u.PasswordHash).IsRequired();
+        
+        // Profiles Context
+        builder.Entity<Profile>().HasKey(p => p.Id);
+        builder.Entity<Profile>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Profile>().Property(p => p.FullName).IsRequired();
+        builder.Entity<Profile>().Property(p => p.EmailAddress).IsRequired();
+        builder.Entity<Profile>().Property(p => p.CountryId).IsRequired();
+        builder.Entity<Profile>().Property(p => p.CityId);
+        builder.Entity<Profile>().Property(p => p.SubscriptionId).IsRequired();
+        builder.Entity<Subscription>().Property(p=>p.Description).IsRequired();
+        builder.Entity<Subscription>().Property(p=>p.Price).IsRequired();
+        builder.Entity<Subscription>().Property(p=>p.Range).IsRequired();
         
         builder.UseSnakeCaseNamingConvention();
     }
