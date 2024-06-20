@@ -6,7 +6,7 @@ using ChaquitacllaError404.API.Shared.Domain.Repositories;
 
 namespace ChaquitacllaError404.API.Profiles.Application.Internal.CommandServices;
 
-public class SubscriptionCommandServiceService(ISubscriptionRepository subscriptionRepository, IUnitOfWork unitOfWork) : ISubscriptionCommandService
+public class SubscriptionCommandService(ISubscriptionRepository subscriptionRepository, IUnitOfWork unitOfWork) : ISubscriptionCommandService
 {
     public async Task<Subscription?> Handle(CreateSubscriptionCommand command)
     {

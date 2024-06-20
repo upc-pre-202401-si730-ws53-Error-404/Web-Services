@@ -175,8 +175,8 @@ builder.Services.AddScoped<IControlQueryService, ControlQueryService>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<IProfileCommandService, ProfileCommandService>();
 builder.Services.AddScoped<IProfileQueryService, ProfileQueryService>();
-builder.Services.AddScoped<ISubscriptionCommandService, ISubscriptionCommandService>();
-builder.Services.AddScoped<ISubscriptionRepository, ISubscriptionRepository>();
+builder.Services.AddScoped<ISubscriptionCommandService, SubscriptionCommandService>();
+builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 
 var app = builder.Build();
 

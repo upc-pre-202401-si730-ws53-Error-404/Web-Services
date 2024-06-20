@@ -29,13 +29,11 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         
   
     //Forum
-        builder.Entity<Question>().ToTable("Questions");
         builder.Entity<Question>().HasKey(q => q.Id);
         builder.Entity<Question>().Property(q => q.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Question>().Property(q => q.Category).IsRequired();
         builder.Entity<Question>().Property(q => q.QuestionText).IsRequired();
         
-        builder.Entity<Answer>().ToTable("Answers");
         builder.Entity<Answer>().HasKey(a => a.Id);
         builder.Entity<Answer>().Property(a => a.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Answer>().Property(a => a.AnswerText).IsRequired();
@@ -48,7 +46,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
       
       
         // Sowing Aggregate
-        builder.Entity<Sowing>().ToTable("Sowings");
         builder.Entity<Sowing>().HasKey(f=>f.Id);
         builder.Entity<Sowing>().Property(f=>f.Id).ValueGeneratedOnAdd();
         builder.Entity<Sowing>().Property(f=>f.AreaLand).IsRequired();
@@ -64,7 +61,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         
         // Control Aggregate
         
-        builder.Entity<Control>().ToTable("Controls");
         builder.Entity<Control>().HasKey(f => f.Id);
         builder.Entity<Control>().Property(f => f.Id).ValueGeneratedOnAdd();
         builder.Entity<Control>().Property(f => f.SowingCondition).IsRequired();
@@ -73,21 +69,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Control>().Property(f => f.SowingId).IsRequired();
       
         // Crop Aggregate
-        builder.Entity<Crop>().ToTable("Crops");
         builder.Entity<Crop>().HasKey(f => f.Id);
         builder.Entity<Crop>().Property(f=>f.Id).ValueGeneratedOnAdd();
         builder.Entity<Crop>().Property(f => f.Name).IsRequired();
         builder.Entity<Crop>().Property(f => f.Description).IsRequired();
         
         //Product Entity 
-        builder.Entity<Product>().ToTable("Products");
         builder.Entity<Product>().HasKey(f => f.Id);
         builder.Entity<Product>().Property(f => f.Id).ValueGeneratedOnAdd();
         builder.Entity<Product>().Property(f => f.Name).IsRequired();
         builder.Entity<Product>().Property(f => f.Type).IsRequired();
         
         //ProductsBySowing Entity
-        builder.Entity<ProductsBySowing>().ToTable("ProductsBySowing");
         builder.Entity<ProductsBySowing>().HasKey(f => new {f.ProductId, f.SowingId});
         builder.Entity<ProductsBySowing>().Property(f => f.ProductId).IsRequired();
         builder.Entity<ProductsBySowing>().Property(f => f.SowingId).IsRequired();
@@ -95,33 +88,28 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<ProductsBySowing>().Property(f => f.UseDate).IsRequired();
         
         //Disease Entity
-        builder.Entity<Disease>().ToTable("Disease");
         builder.Entity<Disease>().HasKey(f => f.Id);
         builder.Entity<Disease>().Property(f => f.Id).ValueGeneratedOnAdd();
         builder.Entity<Disease>().Property(f => f.Name).IsRequired();
         builder.Entity<Disease>().Property(f => f.Description).IsRequired();
         
         //Pest Entity
-        builder.Entity<Pest>().ToTable("Pest");
         builder.Entity<Pest>().HasKey(f => f.Id);
         builder.Entity<Pest>().Property(f => f.Id).ValueGeneratedOnAdd();
         builder.Entity<Pest>().Property(f => f.Name).IsRequired();
         builder.Entity<Pest>().Property(f => f.Description).IsRequired();
         
         // CropsDiseases Entity
-        builder.Entity<CropsDiseases>().ToTable("CropsDiseases");
         builder.Entity<CropsDiseases>().HasKey(cd => new { cd.CropId, cd.DiseaseId });
         builder.Entity<CropsDiseases>().Property(cd => cd.CropId).IsRequired();
         builder.Entity<CropsDiseases>().Property(cd => cd.DiseaseId).IsRequired();
         
         // CropsPests Entity
-        builder.Entity<CropsPests>().ToTable("CropsPests");
         builder.Entity<CropsPests>().HasKey(cp => new { cp.CropId, cp.PestId });
         builder.Entity<CropsPests>().Property(cp => cp.CropId).IsRequired();
         builder.Entity<CropsPests>().Property(cp => cp.PestId).IsRequired();
         
         // Control Entity
-        builder.Entity<Control>().ToTable("Controls");
         builder.Entity<Control>().HasKey(f => f.Id);
         builder.Entity<Control>().Property(f => f.Id).ValueGeneratedOnAdd();
         builder.Entity<Control>().Property(f => f.SowingId).IsRequired();
@@ -179,16 +167,27 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         // Profiles Context
         builder.Entity<Profile>().HasKey(p => p.Id);
         builder.Entity<Profile>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<Profile>().Property(p => p.FullName).IsRequired();
-        builder.Entity<Profile>().Property(p => p.EmailAddress).IsRequired();
+        builder.Entity<Profile>().OwnsOne(p => p.Name,
+            n =>
+            {
+                n.WithOwner().HasForeignKey("Id");
+                n.Property(p => p.FirstName).HasColumnName("FirstName");
+                n.Property(p => p.LastName).HasColumnName("LastName");
+            });
         builder.Entity<Profile>().Property(p => p.CountryId).IsRequired();
         builder.Entity<Profile>().Property(p => p.CityId);
+        builder.Entity<Profile>().OwnsOne(p => p.Email,
+            e =>
+            {
+                e.WithOwner().HasForeignKey("Id");
+                e.Property(a => a.Address).HasColumnName("EmailAddress");
+            });
         builder.Entity<Profile>().Property(p => p.SubscriptionId).IsRequired();
         builder.Entity<Subscription>().Property(p=>p.Description).IsRequired();
         builder.Entity<Subscription>().Property(p=>p.Price).IsRequired();
         builder.Entity<Subscription>().Property(p=>p.Range).IsRequired();
         
-        builder.UseSnakeCaseNamingConvention();
+        builder.UseSnakeCaseWithPluralizedTableNamingConvention();
     }
 }
         
