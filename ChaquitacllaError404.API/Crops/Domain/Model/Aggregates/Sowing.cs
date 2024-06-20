@@ -4,7 +4,7 @@ using ChaquitacllaError404.API.Crops.Domain.Model.ValueObjects;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
 
-public class Sowing
+public partial class Sowing
 {
     public int Id { get; private set; }
     public DateTime StartDate { get; private set; }
