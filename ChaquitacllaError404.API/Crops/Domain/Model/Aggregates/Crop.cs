@@ -4,7 +4,7 @@ using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
 
-public class Crop
+public partial class Crop
 {
     public int Id { get; private set; }
     public string Description { get; private set; }

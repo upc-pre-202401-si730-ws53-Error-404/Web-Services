@@ -42,7 +42,7 @@ public class CropCommandService : ICropCommandService
             throw new Exception("Crop not found");
         }
 
-        crop.Update(command.Name, command.Description); // Assuming Update method exists in Crop class
+        crop.Update(command.Name, command.Description); 
 
         try
         {
