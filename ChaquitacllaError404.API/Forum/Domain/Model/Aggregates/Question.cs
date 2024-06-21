@@ -15,7 +15,7 @@ public class Question : IEntityWithCreatedUpdatedDate
     public int CategoryId { get; private set; }
     public ICollection<Answer> Answers { get;  }
 
-    public DateOnly Date { get; private set; }
+    public DateTime Date { get; private set; }
     
     public DateTimeOffset? CreatedDate { get; set; }
     public DateTimeOffset? UpdatedDate { get; set; }
@@ -26,7 +26,7 @@ public class Question : IEntityWithCreatedUpdatedDate
         QuestionText = string.Empty;
     }
     
-    public Question(int authorId, int categoryId, string questionText, DateOnly date)
+    public Question(int authorId, int categoryId, string questionText, DateTime date)
     {
         AuthorId = new UserId(authorId);
         CategoryId = categoryId;

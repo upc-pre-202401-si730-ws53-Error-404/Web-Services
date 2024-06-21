@@ -36,6 +36,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Question>().HasKey(q => q.Id);
         builder.Entity<Question>().Property(q => q.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Question>().Property(q => q.QuestionText).IsRequired();
+        builder.Entity<Question>().Property(q => q.Date).IsRequired();
         
         builder.Entity<Category>()
             .HasMany(c => c.Questions)
