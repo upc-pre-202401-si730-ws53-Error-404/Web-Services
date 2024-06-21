@@ -48,4 +48,16 @@ public class CropsController (ICropCommandService cropCommandService,
 
         return Ok(CropResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
+    
+    /**
+     * Method HTTP to get all crops
+     */
+    [HttpGet]
+    public async Task<IActionResult> GetAllCrops()
+    {
+        var getAllCropsQuery = new GetAllCropsQuery();
+        var crops = await cropQueryService.Handle(getAllCropsQuery);
+        var resources = crops.Select(CropResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
 }

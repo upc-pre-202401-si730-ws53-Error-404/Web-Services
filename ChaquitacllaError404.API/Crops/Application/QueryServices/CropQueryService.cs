@@ -12,4 +12,8 @@ public class CropQueryService(ICropRepository cropRepository)
     {
         return await cropRepository.FindByIdAsync(query.Id);
     }    
+    public async Task<IEnumerable<Crop>> Handle(GetAllCropsQuery query)
+    {
+        return await cropRepository.ListAsync();
+    }
 }

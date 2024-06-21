@@ -6,5 +6,5 @@ namespace ChaquitacllaError404.API.Crops.Domain.Services;
 public interface ICropQueryService
 {
     Task<Crop?> Handle(GetCropByIdQuery query);
-    
+    Task<IEnumerable<Crop>> Handle(GetAllCropsQuery query);
 }
