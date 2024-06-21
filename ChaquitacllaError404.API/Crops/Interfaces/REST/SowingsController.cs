@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
 using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Domain.Model.Queries;
 using ChaquitacllaError404.API.Crops.Interfaces.Resources;
@@ -39,6 +40,16 @@ public class SowingsController(ISowingCommandService sowingCommandService,
 
         return Ok(SowingResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
+    
+    [HttpPut("{id}/phenological-phase")]
+    public async Task<ActionResult> UpdateSowingPhenologicalPhase(int id)
+    {
+        var updateSowingPhenologicalPhaseCommand = new UpdateSowingPhenologicalPhaseCommand(id);
+        var result = await sowingCommandService.Handle(updateSowingPhenologicalPhaseCommand);
+        var resource = SowingResourceFromEntityAssembler.ToResourceFromEntity(result);
+        return Ok(resource);
+    }
+    
     [HttpGet("{id}")]
     public async Task<ActionResult> GetSowingById(int id)
     {

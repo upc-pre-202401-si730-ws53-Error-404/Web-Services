@@ -50,5 +50,10 @@ public partial class Sowing
         AreaLand = areaLand;
         CropId = cropId;
     }
+    
+    public void UpdatePhenologicalPhase()
+    {
+        PhenologicalPhase++;
+    }
 }
 

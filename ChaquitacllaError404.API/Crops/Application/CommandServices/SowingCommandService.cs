@@ -1,5 +1,6 @@
 ﻿using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
 using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
+using ChaquitacllaError404.API.Crops.Domain.Model.ValueObjects;
 using ChaquitacllaError404.API.Crops.Domain.Repositories;
 using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Shared.Domain.Repositories;
@@ -43,6 +44,25 @@ public class SowingCommandService(ISowingRepository sowingRepository, IUnitOfWor
         catch (Exception e)
         {
             throw new Exception("An error occurred while trying to update the sowing", e);
+        }
+    }
+
+    public async Task<Sowing> Handle(UpdateSowingPhenologicalPhaseCommand command)
+    {
+        var sowing = await sowingRepository.FindByIdAsync(command.Id);
+        if (sowing == null) throw new Exception("Sowing not found");
+        if (sowing.PhenologicalPhase == EPhenologicalPhase.HarvestReady)
+            throw new Exception("The sowing has already reached the harvest phase");
+        sowing.UpdatePhenologicalPhase();
+        try
+        {
+            await sowingRepository.UpdateAsync(sowing);
+            await unitOfWork.CompleteAsync();
+            return sowing;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("An error occurred while trying to update the phenological phase sowing", e);
         }
     }
 }
