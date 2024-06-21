@@ -13,8 +13,9 @@ public class Question : IEntityWithCreatedUpdatedDate
     
     public Category Category { get;  set; }
     public int CategoryId { get; private set; }
-    public ICollection<Answer> Answers { get;  }    
-    
+    public ICollection<Answer> Answers { get;  }
+
+    public DateOnly Date { get; private set; }
     
     public DateTimeOffset? CreatedDate { get; set; }
     public DateTimeOffset? UpdatedDate { get; set; }
@@ -25,14 +26,15 @@ public class Question : IEntityWithCreatedUpdatedDate
         QuestionText = string.Empty;
     }
     
-    public Question(int authorId, int categoryId, string questionText)
+    public Question(int authorId, int categoryId, string questionText, DateOnly date)
     {
         AuthorId = new UserId(authorId);
         CategoryId = categoryId;
         QuestionText = questionText;
+        Date = date;
     }
 
-    public Question(CreateQuestionCommand command) : this(command.AuthorId, command.CategoryId, command.QuestionText){ }
+    public Question(CreateQuestionCommand command) : this(command.AuthorId, command.CategoryId, command.QuestionText, command.Date){ }
 
     public Question UpdateInformation(UpdateQuestionCommand command)
     {

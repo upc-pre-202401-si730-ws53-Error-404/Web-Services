@@ -21,7 +21,8 @@ public static class QuestionResourceFromEntityAssembler
             entity.Id,
             entity.AuthorId.Id,
             entity.CategoryId,
-            entity.QuestionText
+            entity.QuestionText,
+            entity.Date
             );
     }
 }
