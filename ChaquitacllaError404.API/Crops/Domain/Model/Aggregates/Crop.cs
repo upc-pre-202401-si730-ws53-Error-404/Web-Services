@@ -9,6 +9,8 @@ public partial class Crop
     public int Id { get; private set; }
     public string Description { get; private set; }
     public string Name { get; private set; }
+    
+    public string ImageUrl { get; private set; }
     public ICollection<Sowing> Sowings { get; private set; } // Collection of Sowings
 
     public List<CropsDiseases> CropDiseases { get; private set; }
@@ -21,6 +23,7 @@ public partial class Crop
         this.Name = string.Empty;
         this.Description = string.Empty;
         this.Sowings = new List<Sowing>();
+        this.ImageUrl = string.Empty;
         this.CropDiseases = new List<CropsDiseases>(); 
         this.CropPests = new List<CropsPests>();
         this.Pests = new List<Pest>();
@@ -30,6 +33,7 @@ public partial class Crop
     {
         this.Name = command.Name;
         this.Description = command.Description;
+        this.ImageUrl = command.ImageUrl;
         this.CropDiseases = new List<CropsDiseases>();
         this.CropPests = new List<CropsPests>();
         this.Pests = new List<Pest>();

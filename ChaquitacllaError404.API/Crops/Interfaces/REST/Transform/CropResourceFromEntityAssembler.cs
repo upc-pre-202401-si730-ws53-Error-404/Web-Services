@@ -9,6 +9,6 @@ public static class CropResourceFromEntityAssembler
     public static CropResource ToResourceFromEntity(Crop entity)
     {
 
-        return new CropResource(entity.Id, entity.Name, entity.Description);
+        return new CropResource(entity.Id, entity.Name, entity.Description,entity.ImageUrl);
     }
 }
