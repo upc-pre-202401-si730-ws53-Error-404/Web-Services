@@ -9,11 +9,13 @@ public static class SowingResourceFromEntityAssembler
     {
         return new SowingResource(entity.Id,
             entity.StartDate,
-            entity.EndDate, 
+            entity.EndDate,
             entity.AreaLand,
             entity.Status,
             entity.PhenologicalPhase,
-            entity.CropId);
-    }
+            entity.CropId,
+            entity.PhenologicalPhase.ToString());
+    
+}
 }
 
