@@ -113,7 +113,15 @@ builder.Services.AddSwaggerGen(
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
-// Configure Dependency Injections
+// Add CORS Policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowedAllPolicy",
+        policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
 // Shared Bounded Context Dependency Injections
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -199,6 +207,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Apply CORS Policy
+app.UseCors("AllowedAllPolicy");
 
 app.UseRequestAuthorization();
 
