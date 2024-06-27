@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
 using ChaquitacllaError404.API.Crops.Domain.Model.Queries;
 using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
@@ -83,5 +84,18 @@ public class SowingsController(ISowingCommandService sowingCommandService,
         var result = await controlCommandService.Handle(createControlCommand);
         return CreatedAtAction(nameof(GetControlById), new { id = result.Id },
             ControlResourceFromEntityAssembler.ToResourceFromEntity(result));
+    }
+    
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> DeleteSowing(int id)
+    {
+        var deleteSowingCommand = new DeleteSowingCommand(id);
+        var result = await sowingCommandService.Handle(deleteSowingCommand);
+        if (!result)
+        {
+            return NotFound();
+        }
+    
+        return Ok("Sowing deleted successful!");
     }
 }
