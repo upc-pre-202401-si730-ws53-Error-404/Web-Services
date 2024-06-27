@@ -7,4 +7,6 @@ public interface ISowingQueryService
 {
     Task<Sowing?> Handle(GetSowingByIdQuery query);
     Task<IEnumerable<Sowing>> Handle(GetSowingByStatusQuery query);
+    Task<IEnumerable<Sowing>> Handle(GetAllSowingsQuery query);
+
 }

@@ -5,8 +5,13 @@ using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Transform;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
+
+
+
+//[Route("/api/v1/sowings/{sowingId}/controls")] SowingControlsController
 
 
 [ApiController]
@@ -47,7 +52,7 @@ public class SowingsController(ISowingCommandService sowingCommandService,
         return Ok(resource);
     }
     
-    private async Task<ActionResult> GetSowingByStatusQuery(bool status)
+    /*private async Task<ActionResult> GetSowingByStatusQuery(bool status)
     {
         var getSowingByStatus = new GetSowingByStatusQuery(status);
         var result = await sowingQueryService.Handle(getSowingByStatus);
@@ -67,7 +72,7 @@ public class SowingsController(ISowingCommandService sowingCommandService,
             return Ok();
         }
     }
-    
+    */
     [HttpGet("controls/{id}")]
     public async Task<ActionResult> GetControlById(int id)
     {
@@ -86,6 +91,23 @@ public class SowingsController(ISowingCommandService sowingCommandService,
             ControlResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
     
+    [HttpGet]
+    public async Task<ActionResult> GetAllSowings()
+    {
+        try
+        {
+            var getAllSowingsQuery = new GetAllSowingsQuery();
+            var sowings = await sowingQueryService.Handle(getAllSowingsQuery);
+            var resources = sowings.Select(SowingResourceFromEntityAssembler.ToResourceFromEntity);
+            return Ok(resources);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error retrieving sowings: {ex.Message}");
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+    
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteSowing(int id)
     {
@@ -98,4 +120,6 @@ public class SowingsController(ISowingCommandService sowingCommandService,
     
         return Ok("Sowing deleted successful!");
     }
+    
+    
 }

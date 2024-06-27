@@ -16,4 +16,9 @@ public class SowingQueryService(ISowingRepository sowingRepository)
     {
         return await sowingRepository.FindByStatusAsync(query.Status);
     }
+    
+    public Task<IEnumerable<Sowing>> Handle(GetAllSowingsQuery query)
+    {
+        return sowingRepository.FindAllAsync();
+    }
 }

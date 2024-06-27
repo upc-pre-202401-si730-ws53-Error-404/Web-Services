@@ -23,4 +23,9 @@ public class SowingRepository : BaseRepository<Sowing>, ISowingRepository
     Context.Set<Sowing>().Update(sowing);
     await Context.SaveChangesAsync();
     }
+    
+    public async Task<IEnumerable<Sowing>> FindAllAsync()
+    {
+        return await Context.Set<Sowing>().ToListAsync();
+    }
 }
