@@ -26,9 +26,10 @@ using ChaquitacllaError404.API.Profiles.Domain.Repositories;
 using ChaquitacllaError404.API.Profiles.Domain.Services;
 using ChaquitacllaError404.API.Profiles.Infrastructure.Persistence.EFC.Repositories;
 using ChaquitacllaError404.API.Shared.Domain.Repositories;
-using  ChaquitacllaError404.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
+using  ChaquitacllaError404.API.Shared.Interfaces.ASP.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Repositories;
+using ChaquitacllaError404.API.Shared.Interfaces.ASP.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 

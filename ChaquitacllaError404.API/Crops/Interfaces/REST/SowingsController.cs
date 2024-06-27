@@ -1,13 +1,11 @@
 ﻿using System.Net.Mime;
-using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Domain.Model.Queries;
-using ChaquitacllaError404.API.Crops.Interfaces.Resources;
+using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Transform;
-using ChaquitacllaError404.API.Crops.Interfaces.Transform;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ChaquitacllaError404.API.Crops.Interfaces;
+namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
 
 
 [ApiController]

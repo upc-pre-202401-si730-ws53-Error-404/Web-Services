@@ -17,6 +17,7 @@ namespace ChaquitacllaError404.API.Crops.Application.CommandServices
             {
                 Name = command.Name,
                 Description = command.Description,
+                Solution = command.Solution,
                 CropsDiseases = new List<CropsDiseases>()
             };
 

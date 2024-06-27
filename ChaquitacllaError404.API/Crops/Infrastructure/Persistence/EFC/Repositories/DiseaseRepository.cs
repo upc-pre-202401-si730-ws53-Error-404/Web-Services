@@ -20,4 +20,11 @@ public class DiseaseRepository  : BaseRepository<Disease>, IDiseaseRepository
             .Include(d => d.CropsDiseases)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<Disease>> FindAllAsync()
+    {
+        return await Context.Set<Disease>()
+            .Include(d => d.CropsDiseases)
+            .ToListAsync();
+    }
 }

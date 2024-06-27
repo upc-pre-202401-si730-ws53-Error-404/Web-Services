@@ -11,5 +11,10 @@ public class DiseaseQueryService(IDiseaseRepository diseaseRepository)
     public async Task<Disease?> Handle(GetDiseaseByIdQuery query)
     {
         return await diseaseRepository.FindByIdAsync(query.Id);
-    }    
+    }
+
+    public Task<IEnumerable<Disease>> Handle(GetAllDiseasesQuery query)
+    {
+        return diseaseRepository.FindAllAsync();
+    }
 }

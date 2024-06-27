@@ -14,7 +14,7 @@ public partial class Sowing
 
     public EPhenologicalPhase PhenologicalPhase { get; private set; }
 
-    public int CropId { get; private set; }
+    public int CropId { get; set; }
     public Crop Crop { get; private set; }
 
     public ICollection<ProductsBySowing> ProductsBySowing { get; private set; } = [];

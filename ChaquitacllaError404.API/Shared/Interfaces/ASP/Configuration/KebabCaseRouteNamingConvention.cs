@@ -1,7 +1,7 @@
-﻿using ChaquitacllaError404.API.Shared.Infrastructure.Interfaces.ASP.Configuration.Extensions;
+﻿using ChaquitacllaError404.API.Shared.Interfaces.ASP.Configuration.Extensions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace ChaquitacllaError404.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
+namespace ChaquitacllaError404.API.Shared.Interfaces.ASP.Configuration;
 
 public class KebabCaseRouteNamingConvention: IControllerModelConvention
 {

@@ -21,4 +21,11 @@ public class PestRepository : BaseRepository<Pest>, IPestRepository
             .Include(p => p.CropsPests)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<Pest>> FindAllAsync()
+    {
+        return await Context.Set<Pest>()
+            .Include(p => p.CropsPests)
+            .ToListAsync();
+    }
 }

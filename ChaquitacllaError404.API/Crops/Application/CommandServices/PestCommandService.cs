@@ -15,6 +15,7 @@ public class PestCommandService(IPestRepository pestRepository, IUnitOfWork unit
         {
             Name = command.Name,
             Description = command.Description,
+            Solution = command.Solution,
             CropsPests = new List<CropsPests>()
         };
 
