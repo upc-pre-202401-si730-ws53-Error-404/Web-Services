@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ChaquitacllaError404.API.Crops.Interfaces.REST
 {
     [ApiController]
-    [Route("/api/v1/sowings")]
+    [Route("/api/v1/crops-management/sowings")]
     public class SowingControlsController : ControllerBase
     {
         private readonly IControlCommandService controlCommandService;
@@ -57,7 +57,7 @@ namespace ChaquitacllaError404.API.Crops.Interfaces.REST
             return Ok("Control with given id successfully deleted");
         }
 
-        [HttpGet("/controls")]
+        [HttpGet("/api/v1/crops-management/sowings/controls")]
         public async Task<ActionResult<List<ControlResource>>> GetAllControls()
         {
             var getAllControlsQuery = new GetAllControlsQuery();

@@ -9,21 +9,21 @@ namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
 
 
 [ApiController]
-[Route("/api/v1/crops")]
+[Route("/api/v1/crops-management/crops")]
 [Produces(MediaTypeNames.Application.Json)]
-public class CaresController : ControllerBase
+public class CropCaresController : ControllerBase
 {
     private readonly ICareCommandService careCommandService;
     private readonly ICareQueryService careQueryService;
 
-    public CaresController(ICareCommandService careCommandService,
+    public CropCaresController(ICareCommandService careCommandService,
         ICareQueryService careQueryService)
     {
         this.careCommandService = careCommandService;
         this.careQueryService= careQueryService;
     }
 
-    [HttpPost("[controller]")]
+    [HttpPost("cares")]
     public async Task<ActionResult> CreateCare([FromBody] CreateCareResource resource)
     {
         var createCareCommand =
@@ -33,7 +33,7 @@ public class CaresController : ControllerBase
             CareResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
     
-    [HttpGet("[controller]/{id}")]
+    [HttpGet("cares/{id}")]
     public async Task<ActionResult> GetCareById(int id)
     {
         var getCareByIdQuery = new GetCareByIdQuery(id);
@@ -42,7 +42,7 @@ public class CaresController : ControllerBase
         return Ok(resource);
     }
     
-    [HttpGet("{cropId}/[controller]")]
+    [HttpGet("{cropId}/cares")]
     public async Task<ActionResult> GetCaresByCropId(int cropId)
     {
         try

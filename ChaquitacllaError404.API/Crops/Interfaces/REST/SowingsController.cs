@@ -20,12 +20,11 @@ namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
 
 
 [ApiController]
-[Route("/api/v1/[controller]")]
+[Route("/api/v1/crops-management/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 public class SowingsController(ISowingCommandService sowingCommandService,
     ISowingQueryService sowingQueryService, IControlCommandService controlCommandService
-    , IControlQueryService controlQueryService,
-    AppDbContext context
+    , IControlQueryService controlQueryService
     )
     : ControllerBase
 {
@@ -128,45 +127,7 @@ public class SowingsController(ISowingCommandService sowingCommandService,
         return Ok("Sowing deleted successful!");
     }
 
-    [HttpGet("{sowingId:int}/products")]
-    public async Task<IActionResult> GetProductsBySowing(int sowingId)
-    {
-        var getSowingWithProductsQuery = new GetProductsBySowingQuery(sowingId);
-        var result = await sowingQueryService.Handle(getSowingWithProductsQuery);
-        if (!result.Any())
-            return NotFound();
-        
-        var resultList = result.ToList();
-        var resources = resultList.Select(ProductResourceFromEntityAssembler.ToResourceFromEntity);
-        
-        return Ok(resources);
-    }
     
-    [HttpPost("{sowingId:int}/products")]
-    public async Task<IActionResult> AddProductToSowing(int sowingId, [FromBody] AddProductToSowingResource resource)
-    {
-        var command = CreateAddProductToSowingCommandFromResourceAssembler.toCommandFromResource(resource);
-
-        var product = await sowingCommandService.Handle(command);
-
-        return Ok(product);
-    }
-
-    [HttpGet("{sowingId}/products/{productId}")]
-    public async Task<ActionResult<ProductBySowingResource>> GetProductBySowingDateAndQuantity(int sowingId, int productId)
-    {
-        var productBySowing = await context.Set<ProductsBySowing>()
-            .FirstOrDefaultAsync(pbs => pbs.SowingId == sowingId && pbs.Product.Id == productId);
-
-        if (productBySowing == null)
-        {
-            return NotFound();
-        }
-
-        var resource = new ProductBySowingResource(productBySowing.UseDate, productBySowing.Quantity);
-
-        return Ok(resource);
-    }
 
     [HttpPut("{id}/phenologicalphase")]
     public async Task<ActionResult> UpdatePhenologicalPhaseBySowingId(int id)
@@ -179,23 +140,6 @@ public class SowingsController(ISowingCommandService sowingCommandService,
             return NotFound();
         }
         return Ok("Phenological phase updated successfully");
-    }
-    
-    [HttpDelete("{sowingId}/products/{productId}")]
-    public async Task<ActionResult> DeleteProductBySowing(int sowingId, int productId)
-    {
-        var productBySowing = await context.Set<ProductsBySowing>()
-            .FirstOrDefaultAsync(pbs => pbs.SowingId == sowingId && pbs.Product.Id == productId);
-
-        if (productBySowing == null)
-        {
-            return NotFound();
-        }
-
-        context.Set<ProductsBySowing>().Remove(productBySowing);
-        await context.SaveChangesAsync();
-
-        return Ok();
     }
  
 }

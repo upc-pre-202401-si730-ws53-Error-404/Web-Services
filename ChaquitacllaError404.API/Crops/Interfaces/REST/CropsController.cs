@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
 
 [ApiController]
-[Route("/api/v1/[controller]")]
+[Route("/api/v1/crops-management/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 public class CropsController : ControllerBase
 {
@@ -92,22 +92,21 @@ public class CropsController : ControllerBase
         return Ok(CropResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
     
-    [HttpPost("sowings")]
+    /*[HttpPost("sowings")]
     public async Task<ActionResult> CreateSowingFromCrop([FromBody] CreateSowingResource resource)
     {
-        // Lógica para manejar la creación de la siembra
         var createSowingCommand = CreateSowingSourceCommandFromResourceAssembler.ToCommandFromResource(resource);
         var result = await cropCommandService.HandleCreateSowing(createSowingCommand);
         return CreatedAtAction(nameof(GetCropById), new { id = result.Id },
             SowingResourceFromEntityAssembler.ToResourceFromEntity(result));
-    }
+    }*/
     
+    /*
     [HttpGet("sowings/{id}")]
     public async Task<IActionResult> GetSowingById(int id)
     {
         try
         {
-            // Aquí debes reemplazar GetSowingByIdQuery y Handle con tus propios métodos
             var getSowingByIdQuery = new GetSowingByIdQuery(id);
             var sowing = await sowingQueryService.Handle(getSowingByIdQuery);
             var resource = SowingResourceFromEntityAssembler.ToResourceFromEntity(sowing);
@@ -118,6 +117,6 @@ public class CropsController : ControllerBase
             Console.WriteLine($"Error retrieving sowing: {ex.Message}");
             return BadRequest(new { error = ex.Message });
         }
-    }
+    }*/
 
 }

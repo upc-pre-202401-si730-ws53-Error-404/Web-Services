@@ -8,20 +8,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
 
 [ApiController]
-[Route("/api/v1/crops")]
+[Route("/api/v1/crops-management/crops")]
 [Produces(MediaTypeNames.Application.Json)]
-public class PestsController : ControllerBase
+public class CropPestsController : ControllerBase
 {
     private readonly IPestCommandService pestCommandService;
     private readonly IPestQueryService pestQueryService;
 
-    public PestsController(IPestCommandService pestCommandService, IPestQueryService pestQueryService)
+    public CropPestsController(IPestCommandService pestCommandService, IPestQueryService pestQueryService)
     {
         this.pestCommandService = pestCommandService;
         this.pestQueryService = pestQueryService;
     }
 
-    [HttpPost("[controller]")]
+    [HttpPost("pests")]
     public async Task<ActionResult> CreatePest([FromBody] CreatePestResource resource)
     {
         var createPestCommand = CreatePestSourceCommandFromResourceAssembler.ToCommandFromResource(resource);
@@ -30,7 +30,7 @@ public class PestsController : ControllerBase
             PestResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
 
-    [HttpGet("[controller]/{id}")]
+    [HttpGet("pests/{id}")]
     public async Task<ActionResult> GetPestById(int id)
     {
         var getPestByIdQuery = new GetPestByIdQuery(id);
@@ -41,7 +41,7 @@ public class PestsController : ControllerBase
     
     
     
-    [HttpGet("[controller]")]
+    [HttpGet("pests")]
     public async Task<ActionResult> GetAllPests()
     {
         var getAllPestsQuery = new GetAllPestsQuery();
@@ -50,7 +50,7 @@ public class PestsController : ControllerBase
         return Ok(resources);
     }
     
-    [HttpGet("{cropId}/[controller]")]
+    [HttpGet("{cropId}/pests")]
     public async Task<ActionResult> GetPestsByCropId(int cropId)
     {
         try

@@ -8,21 +8,21 @@ using Microsoft.AspNetCore.Mvc;
 namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
 
 [ApiController]
-[Route("/api/v1/crops")]
+[Route("/api/v1/crops-management/crops")]
 [Produces(MediaTypeNames.Application.Json)]
-public class DiseasesController : ControllerBase
+public class CropDiseasesController : ControllerBase
 {
     private readonly IDiseaseCommandService diseaseCommandService;
     private readonly IDiseaseQueryService diseaseQueryService;
 
-    public DiseasesController(IDiseaseCommandService diseaseCommandService,
+    public CropDiseasesController(IDiseaseCommandService diseaseCommandService,
         IDiseaseQueryService diseaseQueryService)
     {
         this.diseaseCommandService = diseaseCommandService;
         this.diseaseQueryService = diseaseQueryService;
     }
 
-    [HttpPost("[controller]")]
+    [HttpPost("diseases")]
     public async Task<ActionResult> CreateDisease([FromBody] CreateDiseaseResource resource)
     {
         var createDiseaseCommand =
@@ -32,7 +32,7 @@ public class DiseasesController : ControllerBase
             DiseaseResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
 
-    [HttpGet("[controller]/{id}")]
+    [HttpGet("diseases/{id}")]
     public async Task<ActionResult> GetDiseaseById(int id)
     {
         var getDiseaseByIdQuery= new GetDiseaseByIdQuery(id);
@@ -41,7 +41,7 @@ public class DiseasesController : ControllerBase
         return Ok(resource);
     }
     
-    [HttpGet("[controller]")]
+    [HttpGet("diseases")]
     public async Task<ActionResult> GetAllDiseases()
     {
         try
@@ -58,7 +58,7 @@ public class DiseasesController : ControllerBase
         }
     }
 
-    [HttpGet("{cropId}/[controller]")]
+    [HttpGet("{cropId}/diseases")]
     public async Task<ActionResult> GetDiseasesByCropId(int cropId)
     {
         try
