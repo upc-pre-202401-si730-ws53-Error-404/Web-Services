@@ -59,14 +59,4 @@ public class AnswersController(IAnswerCommandService answerCommandService, IAnsw
         var resource = AnswerResourceFromEntityAssembler.ToResourceFromEntity(answer);
         return Ok(resource);
     }
-    
-    
-    [HttpGet("question/{questionId}")]
-    public async Task<ActionResult> GetAnswersByQuestionId([FromRoute] int questionId)
-    {
-        var getAllAnswersByQuestionIdQuery = new GetAllAnswersByQuestionId(questionId);
-        var answers = await answerQueryService.Handle(getAllAnswersByQuestionIdQuery);
-        var resources = answers.Select(AnswerResourceFromEntityAssembler.ToResourceFromEntity);
-        return Ok(resources);
-    }
 }
