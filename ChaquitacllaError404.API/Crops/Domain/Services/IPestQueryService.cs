@@ -7,5 +7,7 @@ public interface IPestQueryService
 {
     Task<Pest?> Handle(GetPestByIdQuery query);
     
+    Task<IEnumerable<Pest>> Handle(GetPestByCropIdQuery query);
+    
     Task<IEnumerable<Pest>> Handle(GetAllPestsQuery query);
 }
