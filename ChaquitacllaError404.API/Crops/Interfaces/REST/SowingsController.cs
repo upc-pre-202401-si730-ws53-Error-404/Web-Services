@@ -1,12 +1,15 @@
 ﻿using System.Net.Mime;
 using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
+using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Domain.Model.Queries;
 using ChaquitacllaError404.API.Crops.Interfaces.Resources;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Transform;
 using ChaquitacllaError404.API.Crops.Interfaces.Transform;
+using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ChaquitacllaError404.API.Crops.Interfaces;
@@ -17,7 +20,9 @@ namespace ChaquitacllaError404.API.Crops.Interfaces;
 [Produces(MediaTypeNames.Application.Json)]
 public class SowingsController(ISowingCommandService sowingCommandService,
     ISowingQueryService sowingQueryService, IControlCommandService controlCommandService
-    , IControlQueryService controlQueryService)
+    , IControlQueryService controlQueryService,
+    AppDbContext context
+    )
     : ControllerBase
 {
     [HttpPost]
@@ -127,5 +132,38 @@ public class SowingsController(ISowingCommandService sowingCommandService,
         var product = await sowingCommandService.Handle(command);
 
         return Ok(product);
+    }
+    
+    [HttpGet("{sowingId}/products/{productId}")]
+    public async Task<ActionResult<ProductBySowingResource>> GetProductBySowingDateAndQuantity(int sowingId, int productId)
+    {
+        var productBySowing = await context.Set<ProductsBySowing>()
+            .FirstOrDefaultAsync(pbs => pbs.SowingId == sowingId && pbs.Product.Id == productId);
+
+        if (productBySowing == null)
+        {
+            return NotFound();
+        }
+
+        var resource = new ProductBySowingResource(productBySowing.UseDate, productBySowing.Quantity);
+
+        return Ok(resource);
+    }
+    
+    [HttpDelete("{sowingId}/products/{productId}")]
+    public async Task<ActionResult> DeleteProductBySowing(int sowingId, int productId)
+    {
+        var productBySowing = await context.Set<ProductsBySowing>()
+            .FirstOrDefaultAsync(pbs => pbs.SowingId == sowingId && pbs.Product.Id == productId);
+
+        if (productBySowing == null)
+        {
+            return NotFound();
+        }
+
+        context.Set<ProductsBySowing>().Remove(productBySowing);
+        await context.SaveChangesAsync();
+
+        return Ok();
     }
 }
