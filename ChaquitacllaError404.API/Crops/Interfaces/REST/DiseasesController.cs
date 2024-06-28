@@ -41,15 +41,6 @@ public class DiseasesController : ControllerBase
         return Ok(resource);
     }
     
-    [HttpGet("{cropId}/[controller]")]
-    public async Task<ActionResult> GetDiseasesByCropId(int cropId)
-    {
-        var getDiseaseByCropIdQuery = new GetDiseaseByCropIdQuery(cropId);
-        var diseases = await diseaseQueryService.Handle(getDiseaseByCropIdQuery);
-        var resources = diseases.Select(DiseaseResourceFromEntityAssembler.ToResourceFromEntity);
-        return Ok(resources);
-    }
-    
     [HttpGet("[controller]")]
     public async Task<ActionResult> GetAllDiseases()
     {

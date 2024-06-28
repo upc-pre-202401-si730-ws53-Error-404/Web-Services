@@ -156,6 +156,8 @@ builder.Services.AddScoped<IPestRepository, PestRepository>();
 builder.Services.AddScoped<IPestCommandService, PestCommandService>();
 builder.Services.AddScoped<IPestQueryService, PestQueryService>();
 
+builder.Services.AddScoped<ICareRepository, CareRepository>();
+
 
 //Forum Bounded Context Dependency Injections
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -189,6 +191,8 @@ builder.Services.AddScoped<IProfileCommandService, ProfileCommandService>();
 builder.Services.AddScoped<IProfileQueryService, ProfileQueryService>();
 builder.Services.AddScoped<ISubscriptionCommandService, SubscriptionCommandService>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+
+
 
 var app = builder.Build();
 

@@ -11,9 +11,8 @@ public class Pest
     public string Description { get; set; }
     
     public string Solution { get; set; }
-
-    public List<CropsPests> CropsPests { get; set; }
-
+    
+    public List<Crop> Crops { get; set; }
     
     public Pest(int id, string name, string description, string solution)
     {

@@ -7,6 +7,6 @@ public static class CreatePestSourceCommandFromResourceAssembler
 {
     public static CreatePestCommand ToCommandFromResource(CreatePestResource resource)
     {
-        return new CreatePestCommand(resource.Name, resource.Description, resource.Solution, resource.CropIds);
+        return new CreatePestCommand(resource.Name, resource.Description, resource.Solution);
     }
 }

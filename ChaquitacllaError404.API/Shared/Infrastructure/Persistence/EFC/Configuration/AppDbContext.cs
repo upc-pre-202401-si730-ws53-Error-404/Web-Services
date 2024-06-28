@@ -65,7 +65,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         
         builder.Entity<Sowing>()
             .HasOne(s => s.Crop)
-            .WithMany(c => c.Sowings) 
+            .WithMany(c => c.Sowing) 
             .HasForeignKey(s => s.CropId);
         
         // Control Aggregate
@@ -108,15 +108,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Pest>().Property(f => f.Name).IsRequired();
         builder.Entity<Pest>().Property(f => f.Description).IsRequired();
         
-        // CropsDiseases Entity
-        builder.Entity<CropsDiseases>().HasKey(cd => new { cd.CropId, cd.DiseaseId });
-        builder.Entity<CropsDiseases>().Property(cd => cd.CropId).IsRequired();
-        builder.Entity<CropsDiseases>().Property(cd => cd.DiseaseId).IsRequired();
-        
-        // CropsPests Entity
-        builder.Entity<CropsPests>().HasKey(cp => new { cp.CropId, cp.PestId });
-        builder.Entity<CropsPests>().Property(cp => cp.CropId).IsRequired();
-        builder.Entity<CropsPests>().Property(cp => cp.PestId).IsRequired();
+        //Care Entity
+        builder.Entity<Care>().HasKey(c => c.Id);
+        builder.Entity<Care>().Property(c => c.Id).ValueGeneratedOnAdd();
+
         
         // Control Entity
         builder.Entity<Control>().HasKey(f => f.Id);
@@ -143,28 +138,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .WithMany(s => s.ProductsBySowing)
             .HasForeignKey(p => p.SowingId);
         
-        
-        //Relationships of many to many about Crops and Diseases
-        builder.Entity<Crop>()
-            .HasMany(e => e.CropDiseases)
-            .WithOne(e => e.Crop)
-            .HasForeignKey(e => e.CropId);
-
-        builder.Entity<Disease>()
-            .HasMany(e => e.CropsDiseases)
-            .WithOne(e => e.Disease)
-            .HasForeignKey(e => e.DiseaseId);
-        
-        //Relationships of many to many about Crops and Pests
-        builder.Entity<Crop>()
-            .HasMany(e => e.CropPests)
-            .WithOne(e => e.Crop)
-            .HasForeignKey(e => e.CropId);
-        
-        builder.Entity<Pest>()
-            .HasMany(e => e.CropsPests)
-            .WithOne(e => e.Pest)
-            .HasForeignKey(e => e.PestId);
         
         
         // IAM Context
@@ -196,6 +169,26 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         builder.Entity<Subscription>().Property(p=>p.Price).IsRequired();
         builder.Entity<Subscription>().Property(p=>p.Range).IsRequired();
         
+        
+        // RELATIONSHIPS 
+        
+        //Many to Many relationship between Pest and Crop
+        builder.Entity<Crop>()
+            .HasMany(c => c.Pests)
+            .WithMany(p => p.Crops)
+            .UsingEntity(j => j.ToTable("CropPests"));
+        
+        // Many to Many relationship between Disease and Crop
+        builder.Entity<Crop>()
+            .HasMany(c => c.Diseases)
+            .WithMany(d => d.Crops)
+            .UsingEntity(j => j.ToTable("CropDiseases"));
+
+        // Many to Many relationship between Care and Crop
+        builder.Entity<Crop>()
+            .HasMany(c => c.Cares)
+            .WithMany(ca => ca.Crops)
+            .UsingEntity(j => j.ToTable("CropCares"));
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();
     }
 }

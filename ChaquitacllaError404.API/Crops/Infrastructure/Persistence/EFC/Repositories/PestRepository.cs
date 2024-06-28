@@ -14,18 +14,9 @@ public class PestRepository : BaseRepository<Pest>, IPestRepository
     public PestRepository(AppDbContext context) : base(context)
     {
     }
-    public async Task<IEnumerable<Pest>> FindByCropIdAsync(int cropId)
-    {
-        return await Context.Set<Pest>()
-            .Where(p => p.CropsPests.Any(c => c.CropId == cropId))
-            .Include(p => p.CropsPests)
-            .ToListAsync();
-    }
-
+    
     public async Task<IEnumerable<Pest>> FindAllAsync()
     {
-        return await Context.Set<Pest>()
-            .Include(p => p.CropsPests)
-            .ToListAsync();
+        return await Context.Set<Pest>().ToListAsync();
     }
 }

@@ -21,6 +21,7 @@ public partial class Sowing
    
     public ICollection<Control> Controls { get; set; }
 
+    
     public Sowing()
     {
         this.StartDate = DateTime.Now;

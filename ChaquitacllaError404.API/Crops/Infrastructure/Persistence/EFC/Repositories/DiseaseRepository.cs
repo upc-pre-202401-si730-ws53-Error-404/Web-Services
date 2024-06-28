@@ -12,19 +12,9 @@ public class DiseaseRepository  : BaseRepository<Disease>, IDiseaseRepository
     {
         
     }
-
-    public async Task<IEnumerable<Disease>> FindByCropIdAsync(int cropId)
-    {
-        return await Context.Set<Disease>()
-            .Where(d => d.CropsDiseases.Any(c => c.CropId == cropId))
-            .Include(d => d.CropsDiseases)
-            .ToListAsync();
-    }
-
+    
     public async Task<IEnumerable<Disease>> FindAllAsync()
     {
-        return await Context.Set<Disease>()
-            .Include(d => d.CropsDiseases)
-            .ToListAsync();
+        return await Context.Set<Disease>().ToListAsync();
     }
 }

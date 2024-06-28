@@ -2,7 +2,7 @@
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 
-public class Cares
+public class Care
 {
     public int Id { get; }
 
@@ -10,18 +10,17 @@ public class Cares
     
     public DateTime date { get; private set; }
     
-    public Sowing Sowing { get; private set; }
+    public List<Crop> Crops { get; set; }
 
-    public Cares()
+    public Care()
     {
         
     }
     
-    public Cares(string description, DateTime date, Sowing sowing)
+    public Care(string description, DateTime date)
     {
        this.description = description;
        this.date = date;
-       Sowing = sowing;
     }
     
 }

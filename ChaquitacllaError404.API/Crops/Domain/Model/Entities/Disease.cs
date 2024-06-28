@@ -12,8 +12,8 @@ public class Disease
     
     public string Solution { get; set; }
 
-    public List<CropsDiseases> CropsDiseases { get; set; }
-    
+    public List<Crop> Crops { get; set; }
+
     public Disease(int id, string name, string description, string solution)
     {
         Id = id;

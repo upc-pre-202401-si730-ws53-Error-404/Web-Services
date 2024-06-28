@@ -39,14 +39,7 @@ public class PestsController : ControllerBase
         return Ok(resource);
     }
     
-    [HttpGet("{cropId}/[controller]")]
-    public async Task<ActionResult> GetPestsByCropId(int cropId)
-    {
-        var getPestByCropIdQuery = new GetPestByCropIdQuery(cropId);
-        var pests = await pestQueryService.Handle(getPestByCropIdQuery);
-        var resources = pests.Select(PestResourceFromEntityAssembler.ToResourceFromEntity);
-        return Ok(resources);
-    }
+    
     
     [HttpGet("[controller]")]
     public async Task<ActionResult> GetAllPests()

@@ -13,11 +13,6 @@ public class DiseaseQueryService(IDiseaseRepository diseaseRepository)
         return await diseaseRepository.FindByIdAsync(query.Id);
     }
     
-    public Task<IEnumerable<Disease>> Handle(GetDiseaseByCropIdQuery query)
-    {
-        return diseaseRepository.FindByCropIdAsync(query.CropId);
-    }
-
     public Task<IEnumerable<Disease>> Handle(GetAllDiseasesQuery query)
     {
         return diseaseRepository.FindAllAsync();

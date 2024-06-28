@@ -12,12 +12,7 @@ public class PestQueryService(IPestRepository pestRepository)
     {
         return await pestRepository.FindByIdAsync(query.Id);
     }
-
-    public Task<IEnumerable<Pest>> Handle(GetPestByCropIdQuery query)
-    {
-        return pestRepository.FindByCropIdAsync(query.CropId);
-    }
-
+    
     public Task<IEnumerable<Pest>> Handle(GetAllPestsQuery query)
     {
         return pestRepository.FindAllAsync();

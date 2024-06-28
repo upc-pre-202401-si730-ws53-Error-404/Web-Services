@@ -16,20 +16,8 @@ public class PestCommandService(IPestRepository pestRepository, IUnitOfWork unit
             Name = command.Name,
             Description = command.Description,
             Solution = command.Solution,
-            CropsPests = new List<CropsPests>()
         };
-
-        foreach (var cropId in command.CropIds)
-        {
-            var cropsPests = new CropsPests
-            {
-                CropId = cropId,
-                Pest = pest
-            };
-
-            pest.CropsPests.Add(cropsPests);
-        }
-
+        
         try
         {
             await pestRepository.AddAsync(pest);
