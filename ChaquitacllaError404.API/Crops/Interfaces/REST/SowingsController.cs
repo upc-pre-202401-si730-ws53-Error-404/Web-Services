@@ -151,7 +151,7 @@ public class SowingsController(ISowingCommandService sowingCommandService,
 
         return Ok(product);
     }
-    
+
     [HttpGet("{sowingId}/products/{productId}")]
     public async Task<ActionResult<ProductBySowingResource>> GetProductBySowingDateAndQuantity(int sowingId, int productId)
     {
@@ -159,6 +159,14 @@ public class SowingsController(ISowingCommandService sowingCommandService,
             .FirstOrDefaultAsync(pbs => pbs.SowingId == sowingId && pbs.Product.Id == productId);
 
         if (productBySowing == null)
+        {
+            return NotFound();
+        }
+
+        var resource = new ProductBySowingResource(productBySowing.UseDate, productBySowing.Quantity);
+
+        return Ok(resource);
+    }
 
     [HttpPut("{id}/phenologicalphase")]
     public async Task<ActionResult> UpdatePhenologicalPhaseBySowingId(int id)
@@ -170,11 +178,7 @@ public class SowingsController(ISowingCommandService sowingCommandService,
         {
             return NotFound();
         }
-
-
-        var resource = new ProductBySowingResource(productBySowing.UseDate, productBySowing.Quantity);
-
-        return Ok(resource);
+        return Ok("Phenological phase updated successfully");
     }
     
     [HttpDelete("{sowingId}/products/{productId}")]
@@ -193,7 +197,5 @@ public class SowingsController(ISowingCommandService sowingCommandService,
 
         return Ok();
     }
-        return Ok(SowingResourceFromEntityAssembler.ToResourceFromEntity(result));
-    }
-    
+ 
 }

@@ -33,7 +33,8 @@ public class SowingRepository : BaseRepository<Sowing>, ISowingRepository
             .ToListAsync();
 
         return productsBySowing.Select(pbs => pbs.Product);
-    
+
+    }
     public async Task<IEnumerable<Sowing>> FindAllAsync()
     {
         return await Context.Set<Sowing>().ToListAsync();

@@ -21,7 +21,8 @@ public class SowingQueryService(ISowingRepository sowingRepository)
     public async Task<IEnumerable<Product>> Handle(GetProductsBySowingQuery query)
     {
         return await sowingRepository.FindProductsBySowing(query.SowingId);
-    
+    }
+
     public Task<IEnumerable<Sowing>> Handle(GetAllSowingsQuery query)
     {
         return sowingRepository.FindAllAsync();
