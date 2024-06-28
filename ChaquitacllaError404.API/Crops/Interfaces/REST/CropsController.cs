@@ -101,7 +101,7 @@ public class CropsController : ControllerBase
             SowingResourceFromEntityAssembler.ToResourceFromEntity(result));
     }*/
     
-    /*
+    
     [HttpGet("sowings/{id}")]
     public async Task<IActionResult> GetSowingById(int id)
     {
@@ -117,6 +117,6 @@ public class CropsController : ControllerBase
             Console.WriteLine($"Error retrieving sowing: {ex.Message}");
             return BadRequest(new { error = ex.Message });
         }
-    }*/
+    }
 
 }
