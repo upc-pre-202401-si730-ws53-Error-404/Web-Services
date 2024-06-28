@@ -38,6 +38,10 @@ public class CropsController : ControllerBase
     {
         var getCropByIdQuery = new GetCropByIdQuery(id);
         var result = await cropQueryService.Handle(getCropByIdQuery);
+        if (result == null)
+        {
+            return NotFound();
+        }
         var resource = CropResourceFromEntityAssembler.ToResourceFromEntity(result);
         return Ok(resource);
     }
@@ -62,6 +66,10 @@ public class CropsController : ControllerBase
         {
             var getAllCropsQuery = new GetAllCropsQuery();
             var crops = await cropQueryService.Handle(getAllCropsQuery);
+            if (crops == null)
+            {
+                return Ok(new List<CropResource>());
+            }
             var resources = crops.Select(CropResourceFromEntityAssembler.ToResourceFromEntity);
             return Ok(resources);
         }

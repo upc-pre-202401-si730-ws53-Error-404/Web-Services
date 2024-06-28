@@ -17,4 +17,9 @@ public class DiseaseQueryService(IDiseaseRepository diseaseRepository)
     {
         return diseaseRepository.FindAllAsync();
     }
+    
+    Task<IEnumerable<Disease>> IDiseaseQueryService.Handle(GetDiseaseByCropIdQuery query)
+    {
+        return diseaseRepository.GetDiseasesByCropId(query.CropId);
+    }
 }

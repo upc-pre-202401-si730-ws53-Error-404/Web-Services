@@ -8,4 +8,5 @@ public interface ISowingCommandService
     Task<Sowing> Handle(CreateSowingCommand command);
     Task<Sowing> Handle(int id, UpdateSowingCommand command);
     Task<bool> Handle(DeleteSowingCommand command);
+    Task<Sowing> Handle(UpdatePhenologicalPhaseBySowingIdCommand command);
 }

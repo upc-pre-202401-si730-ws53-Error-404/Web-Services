@@ -18,8 +18,20 @@ public class CropRepository : BaseRepository<Crop>, ICropRepository
         await Context.SaveChangesAsync();
     }
 
-    public Task<List<Crop>> FindAllAsync()
+    public async Task<IEnumerable<Crop>> FindAllAsync()
     {
-        return Context.Set<Crop>().ToListAsync();
+        return await Context.Set<Crop>()
+            .Include(c => c.Diseases)
+            .Include(c => c.Pests)
+            .Include(c => c.Cares)
+            .ToListAsync();
+    }
+    public new async Task<Crop?> FindByIdAsync(int id)
+    {
+        return await Context.Set<Crop>()
+            .Include(c => c.Diseases)
+            .Include(c => c.Pests)
+            .Include(c => c.Cares)
+            .SingleOrDefaultAsync(c => c.Id == id);
     }
 }

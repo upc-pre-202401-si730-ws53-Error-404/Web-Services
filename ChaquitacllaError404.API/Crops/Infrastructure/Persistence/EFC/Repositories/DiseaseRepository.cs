@@ -1,3 +1,4 @@
+using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
 using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 using ChaquitacllaError404.API.Crops.Domain.Repositories;
 using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
@@ -16,5 +17,14 @@ public class DiseaseRepository  : BaseRepository<Disease>, IDiseaseRepository
     public async Task<IEnumerable<Disease>> FindAllAsync()
     {
         return await Context.Set<Disease>().ToListAsync();
+    }
+    
+    public async Task<IEnumerable<Disease>> GetDiseasesByCropId(int cropId)
+    {
+        var crop = await Context.Set<Crop>()
+            .Include(c => c.Diseases)
+            .FirstOrDefaultAsync(c => c.Id == cropId);
+
+        return crop?.Diseases;
     }
 }

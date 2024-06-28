@@ -58,5 +58,20 @@ public class DiseasesController : ControllerBase
         }
     }
 
-
+    [HttpGet("{cropId}/[controller]")]
+    public async Task<ActionResult> GetDiseasesByCropId(int cropId)
+    {
+        try
+        {
+            var getDiseasesByCropIdQuery = new GetDiseaseByCropIdQuery(cropId);
+            var diseases = await diseaseQueryService.Handle(getDiseasesByCropIdQuery);
+            var resources = diseases.Select(DiseaseResourceFromEntityAssembler.ToResourceFromEntity);
+            return Ok(resources);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error retrieving diseases for crop {cropId}: {ex.Message}");
+            return BadRequest(new { error = ex.Message });
+        }
+    }
 }

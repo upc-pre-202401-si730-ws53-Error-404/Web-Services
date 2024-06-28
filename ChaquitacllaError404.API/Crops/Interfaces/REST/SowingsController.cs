@@ -120,6 +120,17 @@ public class SowingsController(ISowingCommandService sowingCommandService,
     
         return Ok("Sowing deleted successful!");
     }
-    
+    [HttpPut("{id}/phenologicalphase")]
+    public async Task<ActionResult> UpdatePhenologicalPhaseBySowingId(int id)
+    {
+        var updatePhenologicalPhaseBySowingIdCommand = new UpdatePhenologicalPhaseBySowingIdCommand(id);
+        var result = await sowingCommandService.Handle(updatePhenologicalPhaseBySowingIdCommand);
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(SowingResourceFromEntityAssembler.ToResourceFromEntity(result));
+    }
     
 }

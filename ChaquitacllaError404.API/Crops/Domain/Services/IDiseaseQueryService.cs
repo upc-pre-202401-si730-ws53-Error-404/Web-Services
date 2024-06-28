@@ -9,4 +9,6 @@ public interface IDiseaseQueryService
     
     
     Task<IEnumerable<Disease>> Handle(GetAllDiseasesQuery query);
+    
+    Task<IEnumerable<Disease>> Handle(GetDiseaseByCropIdQuery query);
 }
