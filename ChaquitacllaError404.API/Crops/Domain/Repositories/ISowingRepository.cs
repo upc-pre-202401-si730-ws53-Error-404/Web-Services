@@ -10,4 +10,5 @@ public interface ISowingRepository : IBaseRepository<Sowing>
     Task UpdateAsync(Sowing sowing);
     Task<IEnumerable<Product>> FindProductsBySowing(int sowingId);
 
+    Task<IEnumerable<Sowing>> FindAllAsync();
 }

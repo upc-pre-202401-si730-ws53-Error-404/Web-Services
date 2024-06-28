@@ -11,4 +11,5 @@ public interface ISowingCommandService
     Task<bool> Handle(DeleteSowingCommand command);
     
     Task<Product> Handle(AddProductToSowingCommand command);
+    Task<Sowing> Handle(UpdatePhenologicalPhaseBySowingIdCommand command);
 }

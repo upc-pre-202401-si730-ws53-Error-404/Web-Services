@@ -3,16 +3,20 @@ using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
 using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Domain.Model.Queries;
-using ChaquitacllaError404.API.Crops.Interfaces.Resources;
+using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Transform;
-using ChaquitacllaError404.API.Crops.Interfaces.Transform;
 using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Annotations;
 
-namespace ChaquitacllaError404.API.Crops.Interfaces;
+namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
+
+
+
+//[Route("/api/v1/sowings/{sowingId}/controls")] SowingControlsController
 
 
 [ApiController]
@@ -55,7 +59,7 @@ public class SowingsController(ISowingCommandService sowingCommandService,
         return Ok(resource);
     }
     
-    private async Task<ActionResult> GetSowingByStatusQuery(bool status)
+    /*private async Task<ActionResult> GetSowingByStatusQuery(bool status)
     {
         var getSowingByStatus = new GetSowingByStatusQuery(status);
         var result = await sowingQueryService.Handle(getSowingByStatus);
@@ -75,7 +79,7 @@ public class SowingsController(ISowingCommandService sowingCommandService,
             return Ok();
         }
     }
-    
+  
     [HttpGet("controls/{id}")]
     public async Task<ActionResult> GetControlById(int id)
     {
@@ -93,10 +97,24 @@ public class SowingsController(ISowingCommandService sowingCommandService,
         return CreatedAtAction(nameof(GetControlById), new { id = result.Id },
             ControlResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
+      */
+    [HttpGet]
+    public async Task<ActionResult> GetAllSowings()
+    {
+        try
+        {
+            var getAllSowingsQuery = new GetAllSowingsQuery();
+            var sowings = await sowingQueryService.Handle(getAllSowingsQuery);
+            var resources = sowings.Select(SowingResourceFromEntityAssembler.ToResourceFromEntity);
+            return Ok(resources);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error retrieving sowings: {ex.Message}");
+            return BadRequest(new { error = ex.Message });
+        }
+    }
     
-    /**
-     * Delete method HTTP 
-     */
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteSowing(int id)
     {
@@ -109,7 +127,7 @@ public class SowingsController(ISowingCommandService sowingCommandService,
     
         return Ok("Sowing deleted successful!");
     }
-    
+
     [HttpGet("{sowingId:int}/products")]
     public async Task<IActionResult> GetProductsBySowing(int sowingId)
     {
@@ -141,9 +159,18 @@ public class SowingsController(ISowingCommandService sowingCommandService,
             .FirstOrDefaultAsync(pbs => pbs.SowingId == sowingId && pbs.Product.Id == productId);
 
         if (productBySowing == null)
+
+    [HttpPut("{id}/phenologicalphase")]
+    public async Task<ActionResult> UpdatePhenologicalPhaseBySowingId(int id)
+    {
+        var updatePhenologicalPhaseBySowingIdCommand = new UpdatePhenologicalPhaseBySowingIdCommand(id);
+        var result = await sowingCommandService.Handle(updatePhenologicalPhaseBySowingIdCommand);
+        if (result == null)
+
         {
             return NotFound();
         }
+
 
         var resource = new ProductBySowingResource(productBySowing.UseDate, productBySowing.Quantity);
 
@@ -166,4 +193,7 @@ public class SowingsController(ISowingCommandService sowingCommandService,
 
         return Ok();
     }
+        return Ok(SowingResourceFromEntityAssembler.ToResourceFromEntity(result));
+    }
+    
 }

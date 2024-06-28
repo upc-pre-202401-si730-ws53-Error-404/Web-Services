@@ -26,7 +26,7 @@ using ChaquitacllaError404.API.Profiles.Domain.Repositories;
 using ChaquitacllaError404.API.Profiles.Domain.Services;
 using ChaquitacllaError404.API.Profiles.Infrastructure.Persistence.EFC.Repositories;
 using ChaquitacllaError404.API.Shared.Domain.Repositories;
-using  ChaquitacllaError404.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
+using  ChaquitacllaError404.API.Shared.Interfaces.ASP.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using  ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -113,7 +113,6 @@ builder.Services.AddSwaggerGen(
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
-
 // Add CORS Policy
 builder.Services.AddCors(options =>
 {
@@ -123,10 +122,6 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
-
-
-
-// Configure Dependency Injections
 
 // Shared Bounded Context Dependency Injections
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -161,6 +156,9 @@ builder.Services.AddScoped<IPestRepository, PestRepository>();
 builder.Services.AddScoped<IPestCommandService, PestCommandService>();
 builder.Services.AddScoped<IPestQueryService, PestQueryService>();
 
+builder.Services.AddScoped<ICareRepository, CareRepository>();
+builder.Services.AddScoped<ICareCommandService, CareCommandService>();
+builder.Services.AddScoped<ICareQueryService, CareQueryService>();
 
 //Forum Bounded Context Dependency Injections
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -196,6 +194,7 @@ builder.Services.AddScoped<ISubscriptionCommandService, SubscriptionCommandServi
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 
 builder.Services.AddScoped<IProductsBySowingRepository, ProductsBySowingRepository>();
+
 
 
 var app = builder.Build();

@@ -14,13 +14,14 @@ public partial class Sowing
 
     public EPhenologicalPhase PhenologicalPhase { get; private set; }
 
-    public int CropId { get; private set; }
+    public int CropId { get; set; }
     public Crop Crop { get; private set; }
 
     public ICollection<ProductsBySowing> ProductsBySowing { get; private set; } = [];
    
     public ICollection<Control> Controls { get; set; }
 
+    
     public Sowing()
     {
         this.StartDate = DateTime.Now;
@@ -49,6 +50,18 @@ public partial class Sowing
     {
         AreaLand = areaLand;
         CropId = cropId;
+    }
+    
+    public void IncrementPhenologicalPhase()
+    {
+        if (PhenologicalPhase < EPhenologicalPhase.HarvestReady)
+        {
+            PhenologicalPhase++;
+        }
+        else
+        {
+            throw new InvalidOperationException("Cannot increment PhenologicalPhase beyond Harvest.");
+        }
     }
 }
 

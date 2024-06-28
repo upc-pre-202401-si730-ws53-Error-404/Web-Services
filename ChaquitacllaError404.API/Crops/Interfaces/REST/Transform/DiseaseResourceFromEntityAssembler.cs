@@ -1,8 +1,7 @@
-using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
 using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
-using ChaquitacllaError404.API.Crops.Interfaces.Resources;
+using ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
 
-namespace ChaquitacllaError404.API.Crops.Interfaces.Transform;
+namespace ChaquitacllaError404.API.Crops.Interfaces.REST.Transform;
 
 public static class DiseaseResourceFromEntityAssembler
 {
@@ -10,6 +9,7 @@ public static class DiseaseResourceFromEntityAssembler
     {
         return new DiseaseResource(entity.Id,
             entity.Name,
-            entity.Description);
+            entity.Description,
+            entity.Solution);
     }
 }

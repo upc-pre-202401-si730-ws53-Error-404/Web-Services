@@ -9,15 +9,18 @@ public class Control
 {
     public int Id { get; }
     
-    public int SowingId { get; private set; }
+    public int SowingId { get;  set; }
+    
+    public DateTime Date { get;  set; }
     
     public Sowing Sowing { get; private set; }
     
-    public ESowingCondition SowingCondition{ get; private set; }
+    public ESowingCondition SowingCondition{ get;  set; }
     
-    public ESowingSoilMoisture SoilMoisture { get; private set; }
+    public ESowingStemCondition StemCondition { get;  set; }
+    public ESowingSoilMoisture SoilMoisture { get;  set; }
     
-    public ESowingStemCondition StemCondition { get; private set; }
+  
     
     public Control()
     {
@@ -26,8 +29,9 @@ public class Control
     {
         SowingId = command.SowingId;
         SowingCondition = command.SowingCondition;
-        SoilMoisture = command.SoilMoisture;
         StemCondition = command.StemCondition;
+        SoilMoisture = command.SoilMoisture;
+        Date = DateTime.Now;
     }
     
 }

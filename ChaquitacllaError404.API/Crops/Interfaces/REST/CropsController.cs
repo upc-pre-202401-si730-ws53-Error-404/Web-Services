@@ -1,22 +1,28 @@
 ﻿using System.Net.Mime;
-using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Domain.Model.Queries;
-using ChaquitacllaError404.API.Crops.Interfaces.Resources;
+using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Transform;
-using ChaquitacllaError404.API.Crops.Interfaces.Transform;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ChaquitacllaError404.API.Crops.Interfaces;
-
+namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
 
 [ApiController]
 [Route("/api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
-public class CropsController (ICropCommandService cropCommandService,
-    ICropQueryService cropQueryService)
-    : ControllerBase
+public class CropsController : ControllerBase
 {
+    private readonly ICropCommandService cropCommandService;
+    private readonly ICropQueryService cropQueryService;
+    private readonly ISowingQueryService sowingQueryService;
+
+    public CropsController(ICropCommandService cropCommandService, ICropQueryService cropQueryService, ISowingQueryService sowingQueryService)
+    {
+        this.cropCommandService = cropCommandService;
+        this.cropQueryService = cropQueryService;
+        this.sowingQueryService = sowingQueryService;
+    }
+
     [HttpPost]
     public async Task<ActionResult> CreateCrop([FromBody] CreateCropResource resource)
     {
@@ -32,10 +38,14 @@ public class CropsController (ICropCommandService cropCommandService,
     {
         var getCropByIdQuery = new GetCropByIdQuery(id);
         var result = await cropQueryService.Handle(getCropByIdQuery);
+        if (result == null)
+        {
+            return NotFound();
+        }
         var resource = CropResourceFromEntityAssembler.ToResourceFromEntity(result);
         return Ok(resource);
     }
-    
+
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateCrop(int id, [FromBody] UpdateCropResource resource)
     {
@@ -48,16 +58,66 @@ public class CropsController (ICropCommandService cropCommandService,
 
         return Ok(CropResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
-    
-    /**
-     * Method HTTP to get all products
-     */
+
     [HttpGet]
     public async Task<IActionResult> GetAllCrops()
     {
-        var getAllCropsQuery = new GetAllCropsQuery();
-        var crops = await cropQueryService.Handle(getAllCropsQuery);
-        var resources = crops.Select(CropResourceFromEntityAssembler.ToResourceFromEntity);
-        return Ok(resources);
+        try
+        {
+            var getAllCropsQuery = new GetAllCropsQuery();
+            var crops = await cropQueryService.Handle(getAllCropsQuery);
+            if (crops == null)
+            {
+                return Ok(new List<CropResource>());
+            }
+            var resources = crops.Select(CropResourceFromEntityAssembler.ToResourceFromEntity);
+            return Ok(resources);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error retrieving crops: {ex.Message}");
+            return BadRequest(new { error = ex.Message });
+        }
     }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteCrop(int id)
+    {
+        var result = await cropCommandService.DeleteCrop(id);
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(CropResourceFromEntityAssembler.ToResourceFromEntity(result));
+    }
+    
+    [HttpPost("sowings")]
+    public async Task<ActionResult> CreateSowingFromCrop([FromBody] CreateSowingResource resource)
+    {
+        // Lógica para manejar la creación de la siembra
+        var createSowingCommand = CreateSowingSourceCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var result = await cropCommandService.HandleCreateSowing(createSowingCommand);
+        return CreatedAtAction(nameof(GetCropById), new { id = result.Id },
+            SowingResourceFromEntityAssembler.ToResourceFromEntity(result));
+    }
+    
+    [HttpGet("sowings/{id}")]
+    public async Task<IActionResult> GetSowingById(int id)
+    {
+        try
+        {
+            // Aquí debes reemplazar GetSowingByIdQuery y Handle con tus propios métodos
+            var getSowingByIdQuery = new GetSowingByIdQuery(id);
+            var sowing = await sowingQueryService.Handle(getSowingByIdQuery);
+            var resource = SowingResourceFromEntityAssembler.ToResourceFromEntity(sowing);
+            return Ok(resource);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error retrieving sowing: {ex.Message}");
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
 }
