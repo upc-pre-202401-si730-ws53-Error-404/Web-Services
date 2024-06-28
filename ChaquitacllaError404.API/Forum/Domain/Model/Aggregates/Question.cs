@@ -22,7 +22,7 @@ public class Question : IEntityWithCreatedUpdatedDate
 
     public Question()
     {
-        AuthorId = new UserId(0);
+        AuthorId = new UserId(1);
         QuestionText = string.Empty;
     }
     
