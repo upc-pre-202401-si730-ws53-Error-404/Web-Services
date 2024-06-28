@@ -195,6 +195,9 @@ builder.Services.AddScoped<IProfileQueryService, ProfileQueryService>();
 builder.Services.AddScoped<ISubscriptionCommandService, SubscriptionCommandService>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 
+builder.Services.AddScoped<IProductsBySowingRepository, ProductsBySowingRepository>();
+
+
 var app = builder.Build();
 
 // Verify Database Objects are created

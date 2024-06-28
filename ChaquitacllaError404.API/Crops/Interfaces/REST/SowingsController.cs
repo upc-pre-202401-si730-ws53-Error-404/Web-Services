@@ -7,6 +7,7 @@ using ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Transform;
 using ChaquitacllaError404.API.Crops.Interfaces.Transform;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ChaquitacllaError404.API.Crops.Interfaces;
 
@@ -102,5 +103,29 @@ public class SowingsController(ISowingCommandService sowingCommandService,
         }
     
         return Ok("Sowing deleted successful!");
+    }
+    
+    [HttpGet("{sowingId:int}/products")]
+    public async Task<IActionResult> GetProductsBySowing(int sowingId)
+    {
+        var getSowingWithProductsQuery = new GetProductsBySowingQuery(sowingId);
+        var result = await sowingQueryService.Handle(getSowingWithProductsQuery);
+        if (!result.Any())
+            return NotFound();
+        
+        var resultList = result.ToList();
+        var resources = resultList.Select(ProductResourceFromEntityAssembler.ToResourceFromEntity);
+        
+        return Ok(resources);
+    }
+    
+    [HttpPost("{sowingId:int}/products")]
+    public async Task<IActionResult> AddProductToSowing(int sowingId, [FromBody] AddProductToSowingResource resource)
+    {
+        var command = CreateAddProductToSowingCommandFromResourceAssembler.toCommandFromResource(resource);
+
+        var product = await sowingCommandService.Handle(command);
+
+        return Ok(product);
     }
 }
