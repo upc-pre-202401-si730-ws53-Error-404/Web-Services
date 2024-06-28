@@ -23,6 +23,6 @@ public static class CreateControlSourceCommandFromResourceAssembler
             throw new ArgumentException($"Invalid value for ESowingStemCondition: {resource.StemCondition}");
         }
 
-        return new CreateControlCommand(sowingId, condition, soilMoisture, stemCondition);
+        return new CreateControlCommand(sowingId, condition,stemCondition, soilMoisture);
     }
 }

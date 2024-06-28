@@ -15,4 +15,9 @@ public class ControlQueryService (IControlRepository controlRepository) : IContr
     {
         return await controlRepository.FindByIdAsync(query.Id);
     }
+
+    public async Task<IEnumerable<Control>> Handle(GetAllControlsBySowingIdQuery query)
+    {
+        return await controlRepository.FindBySowingIdAsync(query.SowingId);
+    }
 }

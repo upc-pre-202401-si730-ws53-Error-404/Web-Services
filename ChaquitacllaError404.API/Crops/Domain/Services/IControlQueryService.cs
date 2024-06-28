@@ -7,4 +7,6 @@ public interface IControlQueryService
 {
     Task<IEnumerable<Control>> Handle(GetAllControlsQuery query);
     Task<Control?> Handle(GetControlByIdQuery query);
+    
+    Task<IEnumerable<Control>> Handle(GetAllControlsBySowingIdQuery query);
 }

@@ -12,8 +12,7 @@ namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
 [Route("/api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 public class SowingsController(ISowingCommandService sowingCommandService,
-    ISowingQueryService sowingQueryService, IControlCommandService controlCommandService
-    , IControlQueryService controlQueryService)
+    ISowingQueryService sowingQueryService)
     : ControllerBase
 {
     [HttpPost]
@@ -65,23 +64,5 @@ public class SowingsController(ISowingCommandService sowingCommandService,
         {
             return Ok();
         }
-    }
-    
-    [HttpGet("controls/{id}")]
-    public async Task<ActionResult> GetControlById(int id)
-    {
-        var getControlByIdQuery = new GetControlByIdQuery(id);
-        var result = await controlQueryService.Handle(getControlByIdQuery);
-        var resource = ControlResourceFromEntityAssembler.ToResourceFromEntity(result);
-        return Ok(resource);
-    }
-    
-    [HttpPost("{sowingId}/controls")]
-    public async Task<ActionResult> CreateControl(int sowingId, [FromBody] CreateControlResource resource)
-    {
-        var createControlCommand = CreateControlSourceCommandFromResourceAssembler.ToCommandFromResource(sowingId, resource);
-        var result = await controlCommandService.Handle(createControlCommand);
-        return CreatedAtAction(nameof(GetControlById), new { id = result.Id },
-            ControlResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
 }
