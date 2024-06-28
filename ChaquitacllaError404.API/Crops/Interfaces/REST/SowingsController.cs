@@ -72,7 +72,7 @@ public class SowingsController(ISowingCommandService sowingCommandService,
             return Ok();
         }
     }
-    */
+  
     [HttpGet("controls/{id}")]
     public async Task<ActionResult> GetControlById(int id)
     {
@@ -90,7 +90,7 @@ public class SowingsController(ISowingCommandService sowingCommandService,
         return CreatedAtAction(nameof(GetControlById), new { id = result.Id },
             ControlResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
-    
+      */
     [HttpGet]
     public async Task<ActionResult> GetAllSowings()
     {

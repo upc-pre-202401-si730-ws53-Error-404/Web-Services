@@ -85,9 +85,15 @@ namespace ChaquitacllaError404.API.Crops.Interfaces.REST
         [HttpPost("{sowingId}/controls")]
         public async Task<ActionResult<ControlResource>> CreateControl(int sowingId, [FromBody] CreateControlResource resource)
         {
+            var getSowingByIdQuery = new GetSowingByIdQuery(sowingId);
+            var sowingOptional = await sowingQueryService.Handle(getSowingByIdQuery);
+            if (sowingOptional == null)
+                return BadRequest("No se encontró un Sowing con el ID proporcionado: " + sowingId);
+
             var createControlCommand = CreateControlSourceCommandFromResourceAssembler.ToCommandFromResource(sowingId, resource);
             var control = await controlCommandService.Handle(createControlCommand);
             var controlResource = ControlResourceFromEntityAssembler.ToResourceFromEntity(control);
-            return CreatedAtAction(nameof(GetControlById), new {sowingId = sowingId, controlId = control.Id}, controlResource);        }
+            return CreatedAtAction(nameof(GetControlById), new {sowingId = sowingId, controlId = control.Id}, controlResource);
+        }
     }
 }
