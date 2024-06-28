@@ -50,15 +50,14 @@ public class ProductsController(IProductCommandService productCommandService,
         return Ok(resource);
     }
     
-    /**
-     * Method HTTP to get products by name. TODO: Implement this method
-     */
+
+    
+    
     
     
     /**
      * Method HTTP POST to create a product.
      */
-    
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] CreateProductResource resource)
     {

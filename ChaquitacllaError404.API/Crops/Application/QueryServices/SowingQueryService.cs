@@ -1,4 +1,5 @@
 ﻿using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 using ChaquitacllaError404.API.Crops.Domain.Model.Queries;
 using ChaquitacllaError404.API.Crops.Domain.Repositories;
 using ChaquitacllaError404.API.Crops.Domain.Services;
@@ -16,6 +17,10 @@ public class SowingQueryService(ISowingRepository sowingRepository)
     {
         return await sowingRepository.FindByStatusAsync(query.Status);
     }
+
+    public async Task<IEnumerable<Product>> Handle(GetProductsBySowingQuery query)
+    {
+        return await sowingRepository.FindProductsBySowing(query.SowingId);
     
     public Task<IEnumerable<Sowing>> Handle(GetAllSowingsQuery query)
     {

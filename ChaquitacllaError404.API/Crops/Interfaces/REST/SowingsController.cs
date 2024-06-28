@@ -1,10 +1,15 @@
 ﻿using System.Net.Mime;
 using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
+using ChaquitacllaError404.API.Crops.Domain.Model.Entities;
+using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Domain.Model.Queries;
 using ChaquitacllaError404.API.Crops.Domain.Services;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
 using ChaquitacllaError404.API.Crops.Interfaces.REST.Transform;
+using ChaquitacllaError404.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
@@ -19,7 +24,9 @@ namespace ChaquitacllaError404.API.Crops.Interfaces.REST;
 [Produces(MediaTypeNames.Application.Json)]
 public class SowingsController(ISowingCommandService sowingCommandService,
     ISowingQueryService sowingQueryService, IControlCommandService controlCommandService
-    , IControlQueryService controlQueryService)
+    , IControlQueryService controlQueryService,
+    AppDbContext context
+    )
     : ControllerBase
 {
     [HttpPost]
@@ -120,16 +127,72 @@ public class SowingsController(ISowingCommandService sowingCommandService,
     
         return Ok("Sowing deleted successful!");
     }
+
+    [HttpGet("{sowingId:int}/products")]
+    public async Task<IActionResult> GetProductsBySowing(int sowingId)
+    {
+        var getSowingWithProductsQuery = new GetProductsBySowingQuery(sowingId);
+        var result = await sowingQueryService.Handle(getSowingWithProductsQuery);
+        if (!result.Any())
+            return NotFound();
+        
+        var resultList = result.ToList();
+        var resources = resultList.Select(ProductResourceFromEntityAssembler.ToResourceFromEntity);
+        
+        return Ok(resources);
+    }
+    
+    [HttpPost("{sowingId:int}/products")]
+    public async Task<IActionResult> AddProductToSowing(int sowingId, [FromBody] AddProductToSowingResource resource)
+    {
+        var command = CreateAddProductToSowingCommandFromResourceAssembler.toCommandFromResource(resource);
+
+        var product = await sowingCommandService.Handle(command);
+
+        return Ok(product);
+    }
+    
+    [HttpGet("{sowingId}/products/{productId}")]
+    public async Task<ActionResult<ProductBySowingResource>> GetProductBySowingDateAndQuantity(int sowingId, int productId)
+    {
+        var productBySowing = await context.Set<ProductsBySowing>()
+            .FirstOrDefaultAsync(pbs => pbs.SowingId == sowingId && pbs.Product.Id == productId);
+
+        if (productBySowing == null)
+
     [HttpPut("{id}/phenologicalphase")]
     public async Task<ActionResult> UpdatePhenologicalPhaseBySowingId(int id)
     {
         var updatePhenologicalPhaseBySowingIdCommand = new UpdatePhenologicalPhaseBySowingIdCommand(id);
         var result = await sowingCommandService.Handle(updatePhenologicalPhaseBySowingIdCommand);
         if (result == null)
+
         {
             return NotFound();
         }
 
+
+        var resource = new ProductBySowingResource(productBySowing.UseDate, productBySowing.Quantity);
+
+        return Ok(resource);
+    }
+    
+    [HttpDelete("{sowingId}/products/{productId}")]
+    public async Task<ActionResult> DeleteProductBySowing(int sowingId, int productId)
+    {
+        var productBySowing = await context.Set<ProductsBySowing>()
+            .FirstOrDefaultAsync(pbs => pbs.SowingId == sowingId && pbs.Product.Id == productId);
+
+        if (productBySowing == null)
+        {
+            return NotFound();
+        }
+
+        context.Set<ProductsBySowing>().Remove(productBySowing);
+        await context.SaveChangesAsync();
+
+        return Ok();
+    }
         return Ok(SowingResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
     
