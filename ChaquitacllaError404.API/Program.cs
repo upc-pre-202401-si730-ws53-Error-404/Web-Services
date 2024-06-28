@@ -157,7 +157,8 @@ builder.Services.AddScoped<IPestCommandService, PestCommandService>();
 builder.Services.AddScoped<IPestQueryService, PestQueryService>();
 
 builder.Services.AddScoped<ICareRepository, CareRepository>();
-
+builder.Services.AddScoped<ICareCommandService, CareCommandService>();
+builder.Services.AddScoped<ICareQueryService, CareQueryService>();
 
 //Forum Bounded Context Dependency Injections
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();

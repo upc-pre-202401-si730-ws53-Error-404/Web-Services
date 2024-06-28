@@ -17,4 +17,8 @@ public class PestQueryService(IPestRepository pestRepository)
     {
         return pestRepository.FindAllAsync();
     }
+    public Task<IEnumerable<Pest>> Handle(GetPestByCropIdQuery query)
+    {
+        return pestRepository.GetPestByCropIdQuery(query.CropId);
+    }
 }

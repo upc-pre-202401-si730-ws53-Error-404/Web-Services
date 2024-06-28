@@ -5,5 +5,6 @@ namespace ChaquitacllaError404.API.Crops.Domain.Repositories;
 
 public interface ICareRepository :IBaseRepository<Care>
 {
+    Task<IEnumerable<Care>> GetCaresByCropIdQuery(int cropId);
 
 }

@@ -7,4 +7,7 @@ public interface IPestRepository : IBaseRepository<Pest>
 {
    Task<IEnumerable<Pest>> FindAllAsync();
    
+   Task<IEnumerable<Pest>> GetPestByCropIdQuery(int cropId);
+
+   
 }

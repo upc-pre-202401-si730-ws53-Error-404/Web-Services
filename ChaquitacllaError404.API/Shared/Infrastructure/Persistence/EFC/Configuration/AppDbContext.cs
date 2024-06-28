@@ -111,7 +111,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         //Care Entity
         builder.Entity<Care>().HasKey(c => c.Id);
         builder.Entity<Care>().Property(c => c.Id).ValueGeneratedOnAdd();
-
+        builder.Entity<Care>().Property(c => c.Suggestion).IsRequired();
+        builder.Entity<Care>().Property(c => c.Date).IsRequired();
         
         // Control Entity
         builder.Entity<Control>().HasKey(f => f.Id);

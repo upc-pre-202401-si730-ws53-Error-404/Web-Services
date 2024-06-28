@@ -1,14 +1,15 @@
 ﻿using ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
+using ChaquitacllaError404.API.Crops.Domain.Model.Commands;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Entities;
 
 public class Care
 {
-    public int Id { get; }
+    public int Id { get; set; }
 
-    public string description { get; private set; }
+    public string Suggestion { get; set; }
     
-    public DateTime date { get; private set; }
+    public DateTime Date { get; set; }
     
     public List<Crop> Crops { get; set; }
 
@@ -17,10 +18,16 @@ public class Care
         
     }
     
-    public Care(string description, DateTime date)
+    public Care(string suggestion, DateTime date)
     {
-       this.description = description;
-       this.date = date;
+       Suggestion = suggestion;
+       Date= date;
     }
+    public Care(CreateCareCommand command)
+    {
+        Suggestion = command.suggestion;
+        Date = command.date;
+    }
+
     
 }

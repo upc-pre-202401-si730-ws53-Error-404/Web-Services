@@ -49,5 +49,23 @@ public class PestsController : ControllerBase
         var resources = pests.Select(PestResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(resources);
     }
+    
+    [HttpGet("{cropId}/[controller]")]
+    public async Task<ActionResult> GetPestsByCropId(int cropId)
+    {
+        try
+        {
+             
+            var getPestsByCropIdQuery = new GetPestByCropIdQuery(cropId);
+            var pests = await pestQueryService.Handle(getPestsByCropIdQuery);
+            var resources = pests.Select(PestResourceFromEntityAssembler.ToResourceFromEntity);
+            return Ok(resources);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error retrieving pests for crop {cropId}: {ex.Message}");
+            return BadRequest(new { error = ex.Message });
+        }
+    }
 
 }
