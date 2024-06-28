@@ -14,7 +14,7 @@ public class Answer
 
     public Answer()
     {
-        AuthorId = new UserId(0);
+        AuthorId = new UserId(1);
         AnswerText = string.Empty;
     }
     public Answer(int authorId,int questionId, string answerText)
