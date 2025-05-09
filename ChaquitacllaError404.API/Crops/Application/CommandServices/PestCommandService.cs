@@ -11,7 +11,13 @@ public class PestCommandService(IPestRepository pestRepository, IUnitOfWork unit
 {
     public async Task<Pest> Handle(CreatePestCommand command)
     {
-        var pest = new Pest(command);
+        var pest = new Pest
+        {
+            Name = command.Name,
+            Description = command.Description,
+            Solution = command.Solution,
+        };
+        
         try
         {
             await pestRepository.AddAsync(pest);

@@ -4,7 +4,7 @@ using ChaquitacllaError404.API.Crops.Domain.Model.ValueObjects;
 
 namespace ChaquitacllaError404.API.Crops.Domain.Model.Aggregates;
 
-public class Sowing
+public partial class Sowing
 {
     public int Id { get; private set; }
     public DateTime StartDate { get; private set; }
@@ -14,11 +14,14 @@ public class Sowing
 
     public EPhenologicalPhase PhenologicalPhase { get; private set; }
 
-    public int CropId { get; private set; }
+    public int CropId { get; set; }
     public Crop Crop { get; private set; }
 
     public ICollection<ProductsBySowing> ProductsBySowing { get; private set; } = [];
+   
+    public ICollection<Control> Controls { get; set; }
 
+    
     public Sowing()
     {
         this.StartDate = DateTime.Now;
@@ -47,6 +50,18 @@ public class Sowing
     {
         AreaLand = areaLand;
         CropId = cropId;
+    }
+    
+    public void IncrementPhenologicalPhase()
+    {
+        if (PhenologicalPhase < EPhenologicalPhase.HarvestReady)
+        {
+            PhenologicalPhase++;
+        }
+        else
+        {
+            throw new InvalidOperationException("Cannot increment PhenologicalPhase beyond Harvest.");
+        }
     }
 }
 

@@ -8,34 +8,37 @@ namespace ChaquitacllaError404.API.Forum.Domain.Model.Aggregates;
 public class Question : IEntityWithCreatedUpdatedDate
 {
     public int Id { get; }
-    public string Category { get; private set; }
     public string QuestionText { get; private set;}
     public UserId AuthorId { get; }
     
-    public ICollection<Answer> Answers { get;  }    
+    public Category Category { get;  set; }
+    public int CategoryId { get; private set; }
+    public ICollection<Answer> Answers { get;  }
+
+    public DateTime Date { get; private set; }
     
     public DateTimeOffset? CreatedDate { get; set; }
     public DateTimeOffset? UpdatedDate { get; set; }
 
     public Question()
     {
-        AuthorId = new UserId(0);
-        Category = string.Empty;
+        AuthorId = new UserId(1);
         QuestionText = string.Empty;
     }
     
-    public Question(int authorId, string category, string questionText)
+    public Question(int authorId, int categoryId, string questionText, DateTime date)
     {
         AuthorId = new UserId(authorId);
-        Category = category;
+        CategoryId = categoryId;
         QuestionText = questionText;
+        Date = date;
     }
 
-    public Question(CreateQuestionCommand command) : this(command.AuthorId, command.Category, command.QuestionText){ }
+    public Question(CreateQuestionCommand command) : this(command.AuthorId, command.CategoryId, command.QuestionText, command.Date){ }
 
     public Question UpdateInformation(UpdateQuestionCommand command)
     {
-        Category = command.Category;
+        CategoryId = command.CategoryId;
         QuestionText = command.QuestionText;
         return this;
     }

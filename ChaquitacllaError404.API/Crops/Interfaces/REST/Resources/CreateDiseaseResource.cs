@@ -1,3 +1,3 @@
-namespace ChaquitacllaError404.API.Crops.Interfaces.Resources;
+namespace ChaquitacllaError404.API.Crops.Interfaces.REST.Resources;
 
-public record CreateDiseaseResource(string Name, string Description, List<int> CropIds);
+public record CreateDiseaseResource(string Name, string Description, string Solution);

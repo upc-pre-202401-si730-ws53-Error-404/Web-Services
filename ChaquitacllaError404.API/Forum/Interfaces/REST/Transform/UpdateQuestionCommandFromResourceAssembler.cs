@@ -7,6 +7,6 @@ public class UpdateQuestionCommandFromResourceAssembler
 {
     public static UpdateQuestionCommand ToCommandFromResource(int questionId,UpdateQuestionResource resource)
     {
-        return new UpdateQuestionCommand(questionId, resource.Category, resource.QuestionText);
+        return new UpdateQuestionCommand(questionId, resource.CategoryId, resource.QuestionText);
     }
 }
